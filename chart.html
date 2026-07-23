@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackjack Basic Strategy Chart (6 Decks, S17) — Best Blackjack Hands</title>
+<meta name="description" content="Color-coded blackjack basic strategy chart for six decks, dealer stands on soft 17: hard totals, soft totals, pairs, and dealer bust odds by upcard.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230E2A20'/%3E%3Ctext x='50' y='74' font-size='66' text-anchor='middle' fill='%23C9A24B'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
+     crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a class="wordmark" href="index.html"><span class="pip">♠</span>Best<span class="long"> Blackjack</span> Hands</a>
+    <a class="navlink" href="index.html" data-route="home">Overview</a>
+    <a class="navlink" href="rankings.html" data-route="rankings">Hand rankings</a>
+    <a class="navlink" href="analyzer.html" data-route="analyzer">Hand analyzer</a>
+    <a class="navlink" href="chart.html" data-route="chart" aria-current="page">Strategy chart</a>
+    <a class="navlink" href="rules.html" data-route="rules">How to play</a>
+  </div>
+</nav>
+
+<!-- ============ STRATEGY CHART ============ -->
+<main id="view-chart" class="view">
+  <div class="eyebrow">Basic strategy chart</div>
+  <h1>The whole game on one card</h1>
+  <p class="lede">The mathematically best first action for every starting hand, generated live by the same engine behind the rankings and the analyzer. Find your hand in the left column, the dealer's upcard along the top.</p>
+  <div class="chart-legend">
+    <span><i class="c-H"></i>H — Hit</span>
+    <span><i class="c-S"></i>S — Stand</span>
+    <span><i class="c-D"></i>D — Double</span>
+    <span><i class="c-P"></i>P — Split</span>
+    <span><i class="c-R"></i>R — Surrender</span>
+  </div>
+  <h2>Hard totals</h2>
+  <div class="chartwrap" id="chart-hard"></div>
+  <p class="hero-note" style="text-align:left">Hard 18 through 21: always stand, against everything.</p>
+  <h2>Soft totals</h2>
+  <div class="chartwrap" id="chart-soft"></div>
+  <h2>Pairs</h2>
+  <div class="chartwrap" id="chart-pairs"></div>
+  <p class="hero-note" style="text-align:left">The two rules worth memorizing first: always split aces and 8s; never split 10s or 5s.</p>
+  <h2>How often does the dealer bust?</h2>
+  <p class="lede" style="font-size:.95rem">The chart above makes more sense with this table in mind — you stand on weak totals against 4, 5 and 6 precisely because the dealer breaks most often from those cards.</p>
+  <div class="chartwrap" id="chart-bust"></div>
+  <!-- AD SLOT: replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
+  <div class="ad-slot"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+</main>
+
+
+<footer>
+  <p><strong>Methodology &amp; sources:</strong> all probabilities and expected values are computed live by an exact expected-value engine (infinite-deck model, a standard close approximation of a 6-deck shoe) under the rules shown on the front page: dealer stands on soft 17, double on any two cards including after splits, split aces receive one card, no resplits, late surrender available, blackjack pays 3:2, values conditioned on the dealer not holding a natural. Results agree with standard published expected-value references for these rules, such as the Wizard of Odds infinite-deck expected value tables and Griffin's <em>The Theory of Blackjack</em>. Because every page queries the same engine, the numbers always agree with each other.</p>
+  <p style="margin-top:10px">For education and entertainment only — blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
+  <p style="margin-top:10px">Last updated: July 24, 2026 · <a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of use</a></p>
+</footer>
+
+<!-- AD SLOT (mobile anchor): shown only ≤640px wide. Replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
+<div class="ad-anchor" id="ad-anchor">
+  <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">×</button>
+  <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>document.body.classList.add("has-anchor");</script>
+<script src="engine.js"></script>
+<script>
+"use strict";
+/* ================================================================
+   Strategy chart page
+   ================================================================ */
+const CODE = {Stand:"S", Hit:"H", Double:"D", Split:"P", Surrender:"R"};
+function chartTable(hands){
+  let html = '<table class="chart"><thead><tr><th style="text-align:left;padding-left:12px">Your hand</th>';
+  for (const up of UPCARDS) html += "<th>" + upLabel(up) + "</th>";
+  html += "</tr></thead><tbody>";
+  for (const h of hands){
+    html += '<tr><td class="lbl">' + h.label + "</td>";
+    for (const up of UPCARDS){
+      const c = CODE[engineFor(up).analyze(h.t, h.soft, h.pair).best.name];
+      html += '<td class="c-' + c + '">' + c + "</td>";
+    }
+    html += "</tr>";
+  }
+  return html + "</tbody></table>";
+}
+document.getElementById("chart-hard").innerHTML =
+  chartTable(HANDS.filter(h => h.type === "hard" && h.t <= 17));
+document.getElementById("chart-soft").innerHTML =
+  chartTable(HANDS.filter(h => h.type === "soft"));
+document.getElementById("chart-pairs").innerHTML =
+  chartTable(HANDS.filter(h => h.type === "pair"));
+document.getElementById("chart-bust").innerHTML = (() => {
+  let html = '<table class="chart"><thead><tr><th style="text-align:left;padding-left:12px">Dealer shows</th>';
+  for (const up of UPCARDS) html += "<th>" + upLabel(up) + "</th>";
+  html += '</tr></thead><tbody><tr><td class="lbl">Bust chance</td>';
+  for (const up of UPCARDS){
+    const b = engineFor(up).dealerBust;
+    html += '<td style="background:rgba(166,59,56,' + (0.15 + b) + ')">' + (100*b).toFixed(0) + "%</td>";
+  }
+  return html + "</tr></tbody></table>";
+})();
+
+
+</script>
+<script>
+document.querySelectorAll("ins.adsbygoogle:not([data-adsbygoogle-status])").forEach(ins => {
+  if (ins.closest(".ad-anchor") && window.innerWidth > 640) return;
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+});
+</script>
+</body>
+</html>

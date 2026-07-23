@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackjack Hand Rankings by Win Probability — Best Blackjack Hands</title>
+<meta name="description" content="All 340 blackjack starting hands ranked by win probability, with push rate, expected value and the best play — 6 decks, dealer stands on soft 17.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230E2A20'/%3E%3Ctext x='50' y='74' font-size='66' text-anchor='middle' fill='%23C9A24B'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
+     crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a class="wordmark" href="index.html"><span class="pip">♠</span>Best<span class="long"> Blackjack</span> Hands</a>
+    <a class="navlink" href="index.html" data-route="home">Overview</a>
+    <a class="navlink" href="rankings.html" data-route="rankings" aria-current="page">Hand rankings</a>
+    <a class="navlink" href="analyzer.html" data-route="analyzer">Hand analyzer</a>
+    <a class="navlink" href="chart.html" data-route="chart">Strategy chart</a>
+    <a class="navlink" href="rules.html" data-route="rules">How to play</a>
+  </div>
+</nav>
+
+<!-- ============ RANKINGS ============ -->
+<main id="view-rankings" class="view">
+  <div class="eyebrow">Hand rankings</div>
+  <h1>Every start, ranked</h1>
+  <p class="lede">Each row is one player starting hand against one dealer upcard. Win, push and loss probabilities assume you play perfect basic strategy from that point on. Click a column header to sort.</p>
+
+  <div class="controls">
+    <div class="control">
+      <label for="f-type">Hand type</label>
+      <select id="f-type">
+        <option value="all">All hands</option>
+        <option value="hard">Hard totals</option>
+        <option value="soft">Soft totals</option>
+        <option value="pair">Pairs</option>
+      </select>
+    </div>
+    <div class="control">
+      <label for="f-up">Dealer upcard</label>
+      <select id="f-up">
+        <option value="all">All upcards</option>
+      </select>
+    </div>
+    <div class="count-note" id="row-count"></div>
+  </div>
+
+  <div class="table-wrap">
+    <table id="rank-table" aria-describedby="row-count">
+      <thead>
+        <tr>
+          <th class="sortable" data-key="hand">Your hand<span class="arrow"></span></th>
+          <th>Type</th>
+          <th class="sortable" data-key="up">Dealer shows<span class="arrow"></span></th>
+          <th>Best play</th>
+          <th class="sortable" data-key="win">Win %<span class="arrow"></span></th>
+          <th class="sortable" data-key="push">Push %<span class="arrow"></span></th>
+          <th class="sortable" data-key="ev">EV / unit<span class="arrow"></span></th>
+        </tr>
+      </thead>
+      <tbody id="rank-body"></tbody>
+    </table>
+  </div>
+  <p class="hero-note" style="text-align:left;margin-top:18px">Win % is the chance the hand wins money under the best non-surrender play. Where surrender is marked as the best play, it beats even that line's expected value by losing only half the bet. EV is the average profit per unit wagered.</p>
+  <!-- AD SLOT: replace inner placeholder with your ad network code. Recommended: 728x90 leaderboard or responsive unit. -->
+  <div class="ad-slot"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+</main>
+
+
+<footer>
+  <p><strong>Methodology &amp; sources:</strong> all probabilities and expected values are computed live by an exact expected-value engine (infinite-deck model, a standard close approximation of a 6-deck shoe) under the rules shown on the front page: dealer stands on soft 17, double on any two cards including after splits, split aces receive one card, no resplits, late surrender available, blackjack pays 3:2, values conditioned on the dealer not holding a natural. Results agree with standard published expected-value references for these rules, such as the Wizard of Odds infinite-deck expected value tables and Griffin's <em>The Theory of Blackjack</em>. Because every page queries the same engine, the numbers always agree with each other.</p>
+  <p style="margin-top:10px">For education and entertainment only — blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
+  <p style="margin-top:10px">Last updated: July 24, 2026 · <a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of use</a></p>
+</footer>
+
+<!-- AD SLOT (mobile anchor): shown only ≤640px wide. Replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
+<div class="ad-anchor" id="ad-anchor">
+  <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">×</button>
+  <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>document.body.classList.add("has-anchor");</script>
+<script src="engine.js"></script>
+<script>
+"use strict";
+/* ================================================================
+   Rankings UI
+   ================================================================ */
+let sortKey = "win", sortDir = -1;
+
+const fType = document.getElementById("f-type");
+const fUp = document.getElementById("f-up");
+for (const up of UPCARDS){
+  const o = document.createElement("option");
+  o.value = up; o.textContent = "Dealer " + upLabel(up);
+  fUp.appendChild(o);
+}
+function renderTable(){
+  let rows = ROWS.filter(r =>
+    (fType.value === "all" || r.type === fType.value) &&
+    (fUp.value === "all" || String(r.up) === fUp.value));
+  const dir = sortDir;
+  rows.sort((a,b) => {
+    let d = 0;
+    if (sortKey === "hand") d = a.order - b.order;
+    else if (sortKey === "up") d = a.up - b.up;
+    else d = a[sortKey] - b[sortKey];
+    if (d === 0) d = b.win - a.win;
+    return d * dir;
+  });
+  const maxWin = 0.7;
+  const body = document.getElementById("rank-body");
+  body.innerHTML = rows.map(r => `
+    <tr>
+      <td><span class="handchip">${r.hand}</span></td>
+      <td><span class="typetag ${r.type === "pair" ? "pair" : ""}">${r.type}</span></td>
+      <td class="num">${upLabel(r.up)}</td>
+      <td class="playtag">${r.best}</td>
+      <td class="num"><span class="winbar"><i style="width:${Math.min(100, 100*r.win/maxWin)}%"></i></span>${fmtPct(r.win)}</td>
+      <td class="num">${fmtPct(r.push)}</td>
+      <td class="num ${r.ev >= 0 ? "ev-pos" : "ev-neg"}">${fmtEV(r.ev)}</td>
+    </tr>`).join("");
+  document.getElementById("row-count").textContent = rows.length + " of " + ROWS.length + " combinations";
+  document.querySelectorAll("#rank-table thead th.sortable").forEach(th => {
+    th.querySelector(".arrow").textContent =
+      th.dataset.key === sortKey ? (sortDir === -1 ? " \u25BE" : " \u25B4") : "";
+  });
+}
+document.querySelectorAll("#rank-table thead th.sortable").forEach(th => {
+  th.addEventListener("click", () => {
+    const k = th.dataset.key;
+    if (sortKey === k) sortDir *= -1;
+    else { sortKey = k; sortDir = (k === "hand" || k === "up") ? 1 : -1; }
+    renderTable();
+  });
+});
+fType.addEventListener("change", renderTable);
+fUp.addEventListener("change", renderTable);
+renderTable();
+
+
+</script>
+<script>
+document.querySelectorAll("ins.adsbygoogle:not([data-adsbygoogle-status])").forEach(ins => {
+  if (ins.closest(".ad-anchor") && window.innerWidth > 640) return;
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+});
+</script>
+</body>
+</html>

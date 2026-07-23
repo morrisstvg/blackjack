@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackjack Hand Analyzer: the Best Play for Any Hand — Best Blackjack Hands</title>
+<meta name="description" content="Enter your two cards and the dealer's upcard to see the exact expected value of hitting, standing, doubling, splitting or surrendering — and why one play is best.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230E2A20'/%3E%3Ctext x='50' y='74' font-size='66' text-anchor='middle' fill='%23C9A24B'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
+     crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a class="wordmark" href="index.html"><span class="pip">♠</span>Best<span class="long"> Blackjack</span> Hands</a>
+    <a class="navlink" href="index.html" data-route="home">Overview</a>
+    <a class="navlink" href="rankings.html" data-route="rankings">Hand rankings</a>
+    <a class="navlink" href="analyzer.html" data-route="analyzer" aria-current="page">Hand analyzer</a>
+    <a class="navlink" href="chart.html" data-route="chart">Strategy chart</a>
+    <a class="navlink" href="rules.html" data-route="rules">How to play</a>
+  </div>
+</nav>
+
+<!-- ============ ANALYZER ============ -->
+<main id="view-analyzer" class="view">
+  <div class="eyebrow">Hand analyzer</div>
+  <h1>What's the play?</h1>
+  <p class="lede">Select your two dealt cards and the dealer's upcard, then deal. Jack, Queen and King all count as 10.</p>
+
+  <div class="picker-grid">
+    <div class="picker">
+      <h3>Your two cards</h3>
+      <div class="rankrow" id="pick-cards" role="group" aria-label="Choose exactly two card ranks"></div>
+    </div>
+    <div class="picker">
+      <h3>Dealer's upcard</h3>
+      <div class="rankrow" id="pick-up" role="group" aria-label="Choose one dealer upcard"></div>
+    </div>
+  </div>
+
+  <div class="deal-row">
+    <button class="dealbtn" id="deal" disabled>Deal &amp; analyze</button>
+    <span class="deal-hint" id="deal-hint">Pick two of your cards and one dealer upcard.</span>
+  </div>
+
+  <section class="result" id="result" aria-live="polite"></section>
+  <!-- AD SLOT: replace inner placeholder with your ad network code. Recommended: 336x280 or 300x250 rectangle. -->
+  <div class="ad-slot rect"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+</main>
+
+
+<footer>
+  <p><strong>Methodology &amp; sources:</strong> all probabilities and expected values are computed live by an exact expected-value engine (infinite-deck model, a standard close approximation of a 6-deck shoe) under the rules shown on the front page: dealer stands on soft 17, double on any two cards including after splits, split aces receive one card, no resplits, late surrender available, blackjack pays 3:2, values conditioned on the dealer not holding a natural. Results agree with standard published expected-value references for these rules, such as the Wizard of Odds infinite-deck expected value tables and Griffin's <em>The Theory of Blackjack</em>. Because every page queries the same engine, the numbers always agree with each other.</p>
+  <p style="margin-top:10px">For education and entertainment only — blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
+  <p style="margin-top:10px">Last updated: July 24, 2026 · <a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of use</a></p>
+</footer>
+
+<!-- AD SLOT (mobile anchor): shown only ≤640px wide. Replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
+<div class="ad-anchor" id="ad-anchor">
+  <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">×</button>
+  <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>document.body.classList.add("has-anchor");</script>
+<script src="engine.js"></script>
+<script>
+"use strict";
+/* ================================================================
+   Analyzer UI
+   ================================================================ */
+const RANKS = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
+const rankVal = r => r === "A" ? 11 : (["J","Q","K","10"].includes(r) ? 10 : +r);
+let myCards = [];   // up to 2 rank strings
+let upPick = null;  // rank string
+
+function buildRow(el, onClick){
+  RANKS.forEach(r => {
+    const b = document.createElement("button");
+    b.className = "rankbtn"; b.type = "button";
+    b.textContent = r; b.dataset.rank = r;
+    b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", () => onClick(r, b));
+    el.appendChild(b);
+  });
+}
+const cardRow = document.getElementById("pick-cards");
+const upRow = document.getElementById("pick-up");
+buildRow(cardRow, (r) => {
+  const count = myCards.filter(x => x === r).length;
+  if (count === 2){                              // pair selected: remove one
+    myCards.splice(myCards.indexOf(r), 1);
+  } else if (myCards.length < 2){
+    myCards.push(r);                             // add (second click makes a pair)
+  } else if (count === 1){
+    myCards.splice(myCards.indexOf(r), 1);       // hand full: deselect this rank
+  } else {
+    myCards.shift(); myCards.push(r);            // hand full: replace oldest
+  }
+  syncPickers();
+});
+buildRow(upRow, (r) => { upPick = (upPick === r) ? null : r; syncPickers(); });
+
+const dealBtn = document.getElementById("deal");
+const hint = document.getElementById("deal-hint");
+function syncPickers(){
+  cardRow.querySelectorAll(".rankbtn").forEach(b => {
+    const n = myCards.filter(x => x === b.dataset.rank).length;
+    b.setAttribute("aria-pressed", n > 0 ? "true" : "false");
+    b.textContent = n === 2 ? b.dataset.rank + "\u00D72" : b.dataset.rank;
+  });
+  upRow.querySelectorAll(".rankbtn").forEach(b =>
+    b.setAttribute("aria-pressed", b.dataset.rank === upPick ? "true" : "false"));
+  const ready = myCards.length === 2 && upPick;
+  dealBtn.disabled = !ready;
+  hint.textContent = ready
+    ? "Your " + myCards.join(" + ") + " vs. dealer " + upPick + " \u2014 ready."
+    : (myCards.length < 2 ? "Pick " + (2 - myCards.length) + " more of your cards. " : "") +
+      (!upPick ? "Pick one dealer upcard." : "");
+}
+syncPickers();
+
+function handName(v1, v2){
+  const isPair = v1 === v2;
+  const s = addCard(0,false,v1), s2 = addCard(s.t, s.soft, v2);
+  if (isPair) return {name: "Pair of " + (v1 === 11 ? "Aces" : v1 + "s"), t:s2.t, soft:s2.soft, pair:v1};
+  return {name: (s2.soft ? "Soft " : "Hard ") + s2.t, t:s2.t, soft:s2.soft, pair:0};
+}
+const outBar = a => {
+  const tot = a.w + a.p + a.l || 1;
+  return `<div class="outbar" aria-hidden="true">
+    <span class="w" style="width:${100*a.w/tot}%"></span>
+    <span class="p" style="width:${100*a.p/tot}%"></span>
+    <span class="l" style="width:${100*a.l/tot}%"></span></div>`;
+};
+
+function bustNext(t, soft){
+  let p = 0;
+  for (const v of VALS){ if (addCard(t, soft, v).t > 21) p += PROB(v); }
+  return p;
+}
+function explain(res, h, upV){
+  const b = res.best, alt = res.acts.filter(a => a !== b).reduce((x,y) => y.ev > x.ev ? y : x);
+  const dbust = (100 * engineFor(upV).dealerBust).toFixed(0);
+  const mybust = (100 * bustNext(h.t, h.soft)).toFixed(0);
+  const up = upLabel(upV);
+  let why;
+  if (b.name === "Stand")
+    why = "Drawing to " + (h.soft ? "soft " : "") + h.t + " busts you " + mybust + "% of the time, while the dealer breaks on their own " + dbust + "% of the time from a " + up + ". Letting the dealer take the risk is worth more than taking it yourself.";
+  else if (b.name === "Hit")
+    why = mybust === "0"
+      ? "One more card can't bust this hand, and " + (h.soft ? "soft " : "") + h.t + " is too weak to stand on against a " + up + " — so drawing costs nothing and can only improve your position."
+      : "Standing on " + h.t + " mostly wins only when the dealer busts (" + dbust + "% from a " + up + "). Hitting risks busting " + mybust + "% of the time, but the hands it improves recover more than standing gives up.";
+  else if (b.name === "Double")
+    why = "Your hand is a favorite to finish strong with exactly one card, so it pays to put twice the money on this spot — even at the price of giving up any further hits.";
+  else if (b.name === "Split")
+    why = h.pair === 11
+      ? "Played as one hand this is a soft 12 — nearly worthless. But each ace is the best starting card in the game, so splitting turns one bad hand into two excellent ones."
+      : h.pair === 8
+        ? "Sixteen is the worst total in blackjack. Two hands starting from an 8 each lose less than one hand stuck on 16 — splitting here is damage control, not greed."
+        : "Played together these cards make " + h.t + ", a mediocre total against a " + up + ". Each " + (h.pair === 10 ? "ten" : h.pair) + " is a stronger start on its own, so two hands earn back more than the extra bet risks.";
+  else
+    why = "Every way of playing this hand loses more than half a bet on average — the best alternative is " + alt.name.toLowerCase() + " at " + fmtEV(alt.ev) + ". Paying half to walk away is simply the cheapest exit.";
+  return why;
+}
+
+dealBtn.addEventListener("click", () => {
+  const v1 = rankVal(myCards[0]), v2 = rankVal(myCards[1]);
+  const upV = rankVal(upPick);
+  const box = document.getElementById("result");
+  box.classList.add("show");
+
+  if ((v1 === 11 && v2 === 10) || (v1 === 10 && v2 === 11)){
+    box.innerHTML = `<div class="bj-banner"><b>Blackjack!</b>
+      <p>${myCards.join(" + ")} is a natural 21. No decision to make \u2014 it pays 3:2 immediately.
+      The only hand that doesn't lose to it is a dealer blackjack, which pushes.</p></div>`;
+    box.scrollIntoView({behavior:"smooth", block:"nearest"});
+    return;
+  }
+
+  const h = handName(v1, v2);
+  const res = engineFor(upV).analyze(h.t, h.soft, h.pair);
+  const bp = res.bestPlayable;
+  const rows = res.acts.map(a => {
+    const isBest = a === res.best;
+    const stats = a.surr
+      ? `<b>${fmtEV(a.ev)}</b> EV \u00B7 lose half, always`
+      : `<b>${fmtEV(a.ev)}</b> EV \u00B7 win ${fmtPct(a.w)}${a.name === "Split" ? " / hand" : ""}`;
+    return `<div class="actrow ${isBest ? "best" : ""}">
+      <div class="aname">${a.name}</div>
+      ${a.surr ? '<div class="outbar" aria-hidden="true"><span class="l" style="width:100%;opacity:.45"></span></div>' : outBar(a)}
+      <div class="stats">${stats}</div></div>`;
+  }).join("");
+
+  box.innerHTML = `
+    <div class="result-head">
+      <span class="handname">${h.name}</span>
+      <span class="vs">${myCards.join(" + ")} vs. dealer ${upPick}</span>
+      <span class="bigwin">win chance with best play <b>${fmtPct(bp.w)}</b></span>
+    </div>
+    <div class="reco"><span class="medal">\u2605</span><div><b>${res.best.name}</b>
+      <span> \u2014 basic strategy's recommended play (${fmtEV(res.best.ev)} expected value per unit bet)</span>
+      <p style="flex-basis:100%;margin-top:6px;font-size:.9rem;color:#D8DED6">${explain(res, h, upV)}</p></div></div>
+    <div class="actions">${rows}</div>
+    <div class="legend">
+      <span><i style="background:var(--good)"></i>win</span>
+      <span><i style="background:var(--push)"></i>push</span>
+      <span><i style="background:var(--bad)"></i>lose</span>
+      ${h.pair ? "" : "<span style='margin-left:auto'>Split is only offered when your two cards match.</span>"}
+    </div>`;
+  box.scrollIntoView({behavior:"smooth", block:"nearest"});
+});
+
+
+</script>
+<script>
+document.querySelectorAll("ins.adsbygoogle:not([data-adsbygoogle-status])").forEach(ins => {
+  if (ins.closest(".ad-anchor") && window.innerWidth > 640) return;
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+});
+</script>
+</body>
+</html>
