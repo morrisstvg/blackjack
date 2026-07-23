@@ -6,6 +6,8 @@
 <title>Best Blackjack Hands</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
+     crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -367,7 +369,7 @@ footer{
     </div>
     <p class="hero-note">All figures on this site come from one expected-value engine, so the rankings and the analyzer always agree.</p>
     <!-- AD SLOT: replace inner placeholder with your ad network code. Recommended: 728x90 leaderboard / 320x100 mobile banner, or a responsive unit. -->
-    <div class="ad-slot"><span class="ad-placeholder">728 × 90 leaderboard</span></div>
+    <div class="ad-slot"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
   </div>
 </main>
 
@@ -414,7 +416,7 @@ footer{
   </div>
   <p class="hero-note" style="text-align:left;margin-top:18px">Win % is the chance the hand wins money under the best non-surrender play. Where surrender is marked as the best play, it beats even that line's expected value by losing only half the bet. EV is the average profit per unit wagered.</p>
   <!-- AD SLOT: replace inner placeholder with your ad network code. Recommended: 728x90 leaderboard or responsive unit. -->
-  <div class="ad-slot"><span class="ad-placeholder">728 × 90 leaderboard</span></div>
+  <div class="ad-slot"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
 </main>
 
 <!-- ============ ANALYZER ============ -->
@@ -441,7 +443,7 @@ footer{
 
   <section class="result" id="result" aria-live="polite"></section>
   <!-- AD SLOT: replace inner placeholder with your ad network code. Recommended: 336x280 or 300x250 rectangle. -->
-  <div class="ad-slot rect"><span class="ad-placeholder">336 × 280 rectangle</span></div>
+  <div class="ad-slot rect"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
 </main>
 
 <!-- ============ RULES ============ -->
@@ -487,7 +489,7 @@ footer{
     </dl>
 
     <!-- AD SLOT: replace inner placeholder with your ad network code. Recommended: 336x280 or 300x250 rectangle. -->
-    <div class="ad-slot rect"><span class="ad-placeholder">336 × 280 rectangle</span></div>
+    <div class="ad-slot rect"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
 
     <h2>Dealer rules</h2>
     <p>The dealer has no choices. They must <strong>hit on 16 or less</strong> and <strong>stand on 17 or more</strong> — at this table, that includes standing on soft 17. The dealer never doubles, splits or surrenders. If the dealer busts, every player hand still standing wins.</p>
@@ -520,7 +522,7 @@ footer{
 <!-- AD SLOT (mobile anchor): replace inner placeholder with your ad network code. Recommended: 320x50 anchor/adaptive banner. Shown only on screens ≤640px wide; the × lets users dismiss it. -->
 <div class="ad-anchor" id="ad-anchor">
   <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">×</button>
-  <span class="ad-placeholder">320 × 50 anchor banner</span>
+  <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
 </div>
 <script>document.body.classList.add("has-anchor");</script>
 
@@ -869,6 +871,15 @@ dealBtn.addEventListener("click", () => {
 });
 
 /* ================================================================
+   AdSense: initialize a unit only once its container is visible
+   ================================================================ */
+function initAds(scope){
+  scope.querySelectorAll("ins.adsbygoogle:not([data-adsbygoogle-status])").forEach(() => {
+    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+  });
+}
+
+/* ================================================================
    Hash routing
    ================================================================ */
 const routes = {"": "home", "/": "home", "/rankings": "rankings", "/analyzer": "analyzer", "/rules": "rules"};
@@ -876,15 +887,19 @@ function route(){
   const h = location.hash.replace(/^#/, "");
   const name = routes[h] || "home";
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-  document.getElementById("view-" + name).classList.add("active");
+  const active = document.getElementById("view-" + name);
+  active.classList.add("active");
   document.querySelectorAll(".nav a.navlink").forEach(a => {
     if (a.dataset.route === name) a.setAttribute("aria-current", "page");
     else a.removeAttribute("aria-current");
   });
   window.scrollTo(0, 0);
+  initAds(active);
 }
 window.addEventListener("hashchange", route);
 route();
+const anchor = document.getElementById("ad-anchor");
+if (anchor && window.innerWidth <= 640) initAds(anchor);
 </script>
 </body>
 </html>
