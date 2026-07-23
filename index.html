@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Best Blackjack Hands — Odds, Strategy Chart & Hand Analyzer</title>
+<meta name="description" content="Exact blackjack odds for every starting hand: rankings by win probability, a hand analyzer with the recommended play, a basic strategy chart, and beginner rules.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230E2A20'/%3E%3Ctext x='50' y='74' font-size='66' text-anchor='middle' fill='%23C9A24B'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
+     crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a class="wordmark" href="index.html"><span class="pip">♠</span>Best<span class="long"> Blackjack</span> Hands</a>
+    <a class="navlink" href="index.html" data-route="home" aria-current="page">Overview</a>
+    <a class="navlink" href="rankings.html" data-route="rankings">Hand rankings</a>
+    <a class="navlink" href="analyzer.html" data-route="analyzer">Hand analyzer</a>
+    <a class="navlink" href="chart.html" data-route="chart">Strategy chart</a>
+    <a class="navlink" href="rules.html" data-route="rules">How to play</a>
+  </div>
+</nav>
+
+<!-- ============ HOME ============ -->
+<main id="view-home" class="view">
+  <div class="hero">
+    <div class="eyebrow">A statistics reference for Blackjack</div>
+    <h1>Every hand has a number.<br>Here they all are.</h1>
+    <p class="lede">Exact expected values and win probabilities for every starting hand against every dealer upcard, computed from the same model on every page — no folklore, no hunches.</p>
+    <div class="assumptions" role="note" aria-label="Table rules assumed throughout">
+      <span><b>6 decks</b></span><span>dealer <b>stands</b> on soft 17</span><span>blackjack pays <b>3 : 2</b></span><span>double on <b>any two</b> cards</span><span>split &amp; late surrender <b>allowed</b></span>
+    </div>
+    <div class="cardgrid">
+      <a class="pcard" href="rankings.html">
+        <div class="index">Q<small>♠</small></div>
+        <div class="body">
+          <h3>Hand rankings</h3>
+          <p>All 340 starting-hand vs. upcard combinations, ranked by win probability under perfect basic strategy. Sort and filter freely.</p>
+        </div>
+        <div class="go">Browse the table →</div>
+        <div class="index flip">Q<small>♠</small></div>
+      </a>
+      <a class="pcard red" href="analyzer.html">
+        <div class="index">A<small>♥</small></div>
+        <div class="body">
+          <h3>Hand analyzer</h3>
+          <p>Pick your two cards and the dealer's upcard. See the value of every legal action — and why one play beats the rest.</p>
+        </div>
+        <div class="go">Analyze a hand →</div>
+        <div class="index flip">A<small>♥</small></div>
+      </a>
+      <a class="pcard red" href="chart.html">
+        <div class="index">K<small>♦</small></div>
+        <div class="body">
+          <h3>Strategy chart</h3>
+          <p>The classic color-coded chart: the best first move for every hand at a glance, plus dealer bust odds by upcard.</p>
+        </div>
+        <div class="go">See the chart →</div>
+        <div class="index flip">K<small>♦</small></div>
+      </a>
+      <a class="pcard" href="rules.html">
+        <div class="index">J<small>♣</small></div>
+        <div class="body">
+          <h3>How to play</h3>
+          <p>Card values, the flow of a round, every action, payouts, insurance, side bets, slang and FAQ — written for a first-timer.</p>
+        </div>
+        <div class="go">Learn the game →</div>
+        <div class="index flip">J<small>♣</small></div>
+      </a>
+    </div>
+    <div class="stats">
+      <div><b>340</b><span>hand × upcard combos</span></div>
+      <div><b>5</b><span>actions compared per hand</span></div>
+      <div><b>≈0.5%</b><span>house edge, perfect play</span></div>
+    </div>
+    <p class="hero-note">All figures on this site come from one expected-value engine, so every page always agrees.</p>
+    <!-- AD SLOT: replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
+    <div class="ad-slot"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+  </div>
+</main>
+
+
+<footer>
+  <p><strong>Methodology &amp; sources:</strong> all probabilities and expected values are computed live by an exact expected-value engine (infinite-deck model, a standard close approximation of a 6-deck shoe) under the rules shown on the front page: dealer stands on soft 17, double on any two cards including after splits, split aces receive one card, no resplits, late surrender available, blackjack pays 3:2, values conditioned on the dealer not holding a natural. Results agree with standard published expected-value references for these rules, such as the Wizard of Odds infinite-deck expected value tables and Griffin's <em>The Theory of Blackjack</em>. Because every page queries the same engine, the numbers always agree with each other.</p>
+  <p style="margin-top:10px">For education and entertainment only — blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
+  <p style="margin-top:10px">Last updated: July 24, 2026 · <a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of use</a></p>
+</footer>
+
+<!-- AD SLOT (mobile anchor): shown only ≤640px wide. Replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
+<div class="ad-anchor" id="ad-anchor">
+  <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">×</button>
+  <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>document.body.classList.add("has-anchor");</script>
+
+<script>
+document.querySelectorAll("ins.adsbygoogle:not([data-adsbygoogle-status])").forEach(ins => {
+  if (ins.closest(".ad-anchor") && window.innerWidth > 640) return;
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+});
+</script>
+</body>
+</html>
