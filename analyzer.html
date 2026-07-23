@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Best Blackjack Hands</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
+     crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --felt:#0E2A20;
+  --felt-deep:#081B14;
+  --felt-line:#1C4433;
+  --stock:#F6F2E7;
+  --stock-dim:#EAE4D3;
+  --ink:#1D1D20;
+  --ink-soft:#4A4A50;
+  --suit-red:#B3312E;
+  --gilt:#C9A24B;
+  --gilt-deep:#A07E30;
+  --mist:#9DB8A9;
+  --mist-dim:#6E8B7C;
+  --good:#2E7D4F;
+  --bad:#A63B38;
+  --push:#8A8A86;
+  --radius:10px;
+  --maxw:1080px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--felt);
+  background-image:radial-gradient(ellipse 120% 80% at 50% -10%, #14382A 0%, var(--felt) 55%, var(--felt-deep) 100%);
+  color:var(--stock);
+  font-family:"Archivo",system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  min-height:100vh;
+}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--gilt);outline-offset:2px;border-radius:4px}
+
+/* ---------- Nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(8,27,20,.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--felt-line);
+}
+.nav-inner{
+  max-width:var(--maxw);margin:0 auto;padding:0 20px;
+  display:flex;align-items:center;gap:6px;height:60px;
+}
+.wordmark{
+  font-family:"Fraunces",serif;font-weight:700;font-size:1.15rem;
+  letter-spacing:.01em;text-decoration:none;margin-right:auto;
+  display:flex;align-items:baseline;gap:8px;white-space:nowrap;
+}
+.wordmark .pip{color:var(--gilt);font-size:1rem}
+.nav a.navlink{
+  text-decoration:none;color:var(--mist);
+  font-size:.85rem;font-weight:500;letter-spacing:.03em;
+  padding:7px 12px;border-radius:6px;
+}
+.nav a.navlink:hover{color:var(--stock)}
+.nav a.navlink[aria-current="page"]{color:var(--felt-deep);background:var(--gilt)}
+@media(max-width:640px){
+  .nav-inner{padding:0 12px;height:54px}
+  .wordmark span.long{display:none}
+  .nav a.navlink{padding:6px 8px;font-size:.78rem}
+}
+
+/* ---------- Views ---------- */
+.view{display:none;max-width:var(--maxw);margin:0 auto;padding:40px 20px 80px}
+.view.active{display:block}
+.eyebrow{
+  font-family:"Spline Sans Mono",monospace;font-size:.72rem;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gilt);margin-bottom:10px;
+}
+h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;letter-spacing:-.01em}
+h2{font-family:"Fraunces",serif;font-weight:600;font-size:1.5rem;margin:2.2em 0 .6em}
+.lede{color:var(--mist);max-width:56ch;margin-top:14px;font-size:1.05rem}
+.rule-gold{border:none;border-top:1px solid var(--felt-line);margin:28px 0}
+
+/* ---------- Landing ---------- */
+.hero{padding-top:30px;text-align:center}
+.hero .lede{margin-left:auto;margin-right:auto}
+.assumptions{
+  display:inline-flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;
+  margin-top:22px;padding:10px 18px;border:1px solid var(--felt-line);border-radius:999px;
+  font-family:"Spline Sans Mono",monospace;font-size:.72rem;color:var(--mist);
+}
+.assumptions b{color:var(--stock);font-weight:500}
+.hand{
+  display:flex;justify-content:center;align-items:flex-end;gap:0;
+  margin:56px auto 8px;max-width:900px;flex-wrap:wrap;
+}
+.pcard{
+  width:230px;min-height:320px;background:var(--stock);color:var(--ink);
+  border-radius:14px;border:1px solid #D9D2BE;
+  box-shadow:0 12px 30px rgba(0,0,0,.45), inset 0 0 0 6px #fff;
+  padding:18px;position:relative;text-decoration:none;text-align:left;
+  display:flex;flex-direction:column;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.pcard:nth-child(1){transform:rotate(-6deg) translateY(14px)}
+.pcard:nth-child(2){transform:rotate(0deg) translateY(0);z-index:2}
+.pcard:nth-child(3){transform:rotate(6deg) translateY(14px)}
+.pcard:hover{transform:rotate(0) translateY(-14px);box-shadow:0 22px 44px rgba(0,0,0,.55);z-index:3}
+.pcard .index{
+  font-family:"Fraunces",serif;font-weight:700;font-size:1.5rem;line-height:1;
+  position:absolute;top:14px;left:14px;text-align:center;
+}
+.pcard .index small{display:block;font-size:1.05rem}
+.pcard .index.flip{top:auto;left:auto;bottom:14px;right:14px;transform:rotate(180deg)}
+.pcard.red .index{color:var(--suit-red)}
+.pcard .body{margin:auto 0;padding:34px 6px 30px}
+.pcard .body h3{font-family:"Fraunces",serif;font-size:1.35rem;font-weight:600;margin-bottom:8px}
+.pcard .body p{font-size:.86rem;color:var(--ink-soft);line-height:1.5}
+.pcard .go{
+  font-family:"Spline Sans Mono",monospace;font-size:.7rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gilt-deep);padding:0 6px 6px;
+}
+@media(max-width:780px){
+  .hand{gap:18px}
+  .pcard,.pcard:nth-child(1),.pcard:nth-child(3){transform:none;width:min(340px,100%);min-height:0}
+  .pcard .body{padding:40px 6px 24px}
+}
+.hero-note{color:var(--mist-dim);font-size:.8rem;margin-top:36px;font-family:"Spline Sans Mono",monospace}
+
+/* ---------- Controls ---------- */
+.controls{
+  display:flex;flex-wrap:wrap;gap:14px 22px;align-items:flex-end;
+  margin:26px 0 18px;padding:16px 18px;
+  background:rgba(0,0,0,.18);border:1px solid var(--felt-line);border-radius:var(--radius);
+}
+.control label{
+  display:block;font-family:"Spline Sans Mono",monospace;font-size:.68rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--mist);margin-bottom:6px;
+}
+.control select{
+  background:var(--felt-deep);color:var(--stock);border:1px solid var(--felt-line);
+  border-radius:6px;padding:8px 12px;font-family:"Archivo",sans-serif;font-size:.9rem;min-width:140px;
+}
+.count-note{margin-left:auto;font-family:"Spline Sans Mono",monospace;font-size:.75rem;color:var(--mist-dim);align-self:center}
+@media(max-width:640px){.count-note{margin-left:0}}
+
+/* ---------- Rankings table ---------- */
+.table-wrap{overflow-x:auto;border:1px solid var(--felt-line);border-radius:var(--radius);background:rgba(0,0,0,.15)}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:.88rem}
+thead th{
+  position:sticky;top:0;background:var(--felt-deep);color:var(--mist);
+  font-family:"Spline Sans Mono",monospace;font-weight:500;font-size:.68rem;
+  letter-spacing:.12em;text-transform:uppercase;text-align:left;
+  padding:12px 14px;border-bottom:1px solid var(--felt-line);white-space:nowrap;
+}
+thead th.sortable{cursor:pointer;user-select:none}
+thead th.sortable:hover{color:var(--stock)}
+thead th .arrow{color:var(--gilt);margin-left:4px}
+tbody td{padding:9px 14px;border-bottom:1px solid rgba(28,68,51,.5);white-space:nowrap}
+tbody tr:hover{background:rgba(201,162,75,.06)}
+td.num{font-family:"Spline Sans Mono",monospace;font-size:.84rem}
+td .handchip{font-family:"Spline Sans Mono",monospace;font-weight:600}
+.typetag{
+  font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid var(--felt-line);color:var(--mist);
+}
+.typetag.pair{border-color:var(--gilt-deep);color:var(--gilt)}
+.ev-pos{color:#7FCB9B}
+.ev-neg{color:#E08A87}
+.playtag{font-size:.82rem;color:var(--stock)}
+.winbar{
+  display:inline-block;vertical-align:middle;height:6px;width:70px;border-radius:3px;
+  background:rgba(255,255,255,.12);margin-right:8px;overflow:hidden;
+}
+.winbar i{display:block;height:100%;background:var(--gilt)}
+
+/* ---------- Analyzer ---------- */
+.picker-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:26px}
+@media(max-width:760px){.picker-grid{grid-template-columns:1fr}}
+.picker{
+  background:rgba(0,0,0,.18);border:1px solid var(--felt-line);border-radius:var(--radius);padding:18px;
+}
+.picker h3{
+  font-family:"Spline Sans Mono",monospace;font-size:.7rem;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--mist);margin-bottom:12px;
+}
+.rankrow{display:flex;flex-wrap:wrap;gap:7px}
+.rankbtn{
+  width:44px;height:58px;border-radius:7px;border:1px solid #D9D2BE;background:var(--stock);
+  color:var(--ink);font-family:"Fraunces",serif;font-weight:700;font-size:1.1rem;cursor:pointer;
+  box-shadow:0 2px 5px rgba(0,0,0,.35);transition:transform .12s ease;
+}
+.rankbtn:hover{transform:translateY(-3px)}
+.rankbtn[aria-pressed="true"]{
+  background:var(--gilt);border-color:var(--gilt-deep);color:var(--felt-deep);
+  box-shadow:0 0 0 2px var(--gilt-deep), 0 4px 10px rgba(0,0,0,.4);
+}
+.deal-row{margin-top:26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.dealbtn{
+  background:var(--gilt);color:var(--felt-deep);border:none;border-radius:8px;
+  font-family:"Fraunces",serif;font-weight:700;font-size:1.05rem;letter-spacing:.02em;
+  padding:12px 34px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.4);
+}
+.dealbtn:hover{background:#D8B25C}
+.dealbtn:disabled{opacity:.45;cursor:not-allowed}
+.deal-hint{font-size:.85rem;color:var(--mist-dim)}
+
+.result{margin-top:34px;display:none}
+.result.show{display:block}
+.result-head{
+  display:flex;flex-wrap:wrap;gap:14px 30px;align-items:baseline;
+  padding-bottom:14px;border-bottom:1px solid var(--felt-line);margin-bottom:6px;
+}
+.result-head .handname{font-family:"Fraunces",serif;font-size:1.6rem;font-weight:600}
+.result-head .vs{color:var(--mist);font-size:.95rem}
+.bigwin{font-family:"Spline Sans Mono",monospace;font-size:1.05rem;color:var(--stock)}
+.bigwin b{color:var(--gilt);font-size:1.35rem;font-weight:600}
+.reco{
+  margin:18px 0 22px;padding:14px 18px;border-radius:var(--radius);
+  background:linear-gradient(90deg, rgba(201,162,75,.16), rgba(201,162,75,.04));
+  border:1px solid var(--gilt-deep);
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.reco .medal{font-size:1.3rem}
+.reco b{font-family:"Fraunces",serif;font-size:1.2rem;color:var(--gilt)}
+.reco span{color:var(--mist);font-size:.9rem}
+.actions{display:grid;gap:10px}
+.actrow{
+  display:grid;grid-template-columns:120px 1fr 170px;gap:14px;align-items:center;
+  padding:12px 16px;border:1px solid var(--felt-line);border-radius:var(--radius);
+  background:rgba(0,0,0,.15);
+}
+.actrow.best{border-color:var(--gilt);background:rgba(201,162,75,.08)}
+.actrow .aname{font-weight:600;font-size:.95rem}
+.actrow.best .aname::after{content:" ★";color:var(--gilt)}
+.outbar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:rgba(255,255,255,.08)}
+.outbar .w{background:var(--good)}
+.outbar .p{background:var(--push)}
+.outbar .l{background:var(--bad)}
+.actrow .stats{font-family:"Spline Sans Mono",monospace;font-size:.78rem;text-align:right;color:var(--mist)}
+.actrow .stats b{color:var(--stock);font-weight:500}
+.legend{display:flex;gap:18px;margin-top:14px;font-size:.75rem;color:var(--mist);font-family:"Spline Sans Mono",monospace}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+@media(max-width:640px){
+  .actrow{grid-template-columns:1fr;gap:8px}
+  .actrow .stats{text-align:left}
+}
+.bj-banner{
+  margin-top:26px;padding:22px;border-radius:var(--radius);text-align:center;
+  border:1px solid var(--gilt);background:rgba(201,162,75,.1);
+}
+.bj-banner b{font-family:"Fraunces",serif;font-size:1.5rem;color:var(--gilt)}
+.bj-banner p{color:var(--mist);margin-top:6px;font-size:.92rem}
+
+/* ---------- Rules ---------- */
+.rules{max-width:720px}
+.rules p{color:#D8DED6;margin:.7em 0}
+.rules h2{margin-top:2em}
+.rules ul,.rules ol{margin:.6em 0 .9em 1.3em;color:#D8DED6}
+.rules li{margin:.35em 0}
+.rules dt{font-weight:600;color:var(--stock);margin-top:.9em}
+.rules dd{color:var(--mist);margin-left:0}
+.rules .term{color:var(--gilt);font-weight:600}
+.callout{
+  border-left:3px solid var(--gilt);padding:10px 16px;margin:1.2em 0;
+  background:rgba(201,162,75,.06);border-radius:0 8px 8px 0;font-size:.94rem;color:#D8DED6;
+}
+
+/* ---------- Ad slots ---------- */
+.ad-slot{
+  margin:36px auto;max-width:728px;min-height:90px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px dashed var(--felt-line);border-radius:var(--radius);
+  background:rgba(0,0,0,.12);position:relative;
+}
+.ad-slot::before{
+  content:"Advertisement";position:absolute;top:6px;left:10px;
+  font-family:"Spline Sans Mono",monospace;font-size:.6rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--mist-dim);
+}
+.ad-slot .ad-placeholder{color:var(--mist-dim);font-size:.78rem;font-family:"Spline Sans Mono",monospace}
+.ad-slot.rect{max-width:336px;min-height:280px}
+@media(max-width:640px){
+  .ad-slot{max-width:320px;min-height:100px}
+}
+.ad-anchor{
+  display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;
+  background:var(--felt-deep);border-top:1px solid var(--felt-line);
+  height:60px;align-items:center;justify-content:center;
+  box-shadow:0 -6px 18px rgba(0,0,0,.45);
+}
+.ad-anchor .ad-placeholder{color:var(--mist-dim);font-size:.72rem;font-family:"Spline Sans Mono",monospace}
+.ad-anchor .ad-close{
+  position:absolute;top:-26px;right:8px;width:26px;height:26px;
+  border:1px solid var(--felt-line);border-bottom:none;border-radius:6px 6px 0 0;
+  background:var(--felt-deep);color:var(--mist);cursor:pointer;font-size:.8rem;line-height:1;
+}
+@media(max-width:640px){
+  .ad-anchor{display:flex}
+  body.has-anchor{padding-bottom:60px}
+}
+
+/* ---------- Footer ---------- */
+footer{
+  border-top:1px solid var(--felt-line);padding:26px 20px 44px;
+  max-width:var(--maxw);margin:0 auto;
+  font-size:.76rem;color:var(--mist-dim);font-family:"Spline Sans Mono",monospace;line-height:1.7;
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a class="wordmark" href="#/"><span class="pip">♠</span>Best<span class="long"> Blackjack</span> Hands</a>
+    <a class="navlink" href="#/" data-route="home">Overview</a>
+    <a class="navlink" href="#/rankings" data-route="rankings">Hand rankings</a>
+    <a class="navlink" href="#/analyzer" data-route="analyzer">Hand analyzer</a>
+    <a class="navlink" href="#/rules" data-route="rules">How to play</a>
+  </div>
+</nav>
+
+<!-- ============ HOME ============ -->
+<main id="view-home" class="view">
+  <div class="hero">
+    <div class="eyebrow">A statistics reference for Blackjack</div>
+    <h1>Every hand has a number.<br>Here they all are.</h1>
+    <p class="lede">Exact expected values and win probabilities for every starting hand against every dealer upcard, computed from the same model on every page — no folklore, no hunches.</p>
+    <div class="assumptions" role="note" aria-label="Table rules assumed throughout">
+      <span><b>6 decks</b></span><span>dealer <b>stands</b> on soft 17</span><span>blackjack pays <b>3 : 2</b></span><span>double on <b>any two</b> cards</span><span>split &amp; late surrender <b>allowed</b></span>
+    </div>
+    <div class="hand">
+      <a class="pcard" href="#/rankings">
+        <div class="index">Q<small>♠</small></div>
+        <div class="body">
+          <h3>Hand rankings</h3>
+          <p>All 340 starting-hand vs. upcard combinations, ranked by win probability under perfect basic strategy. Sort and filter freely.</p>
+        </div>
+        <div class="go">Browse the table →</div>
+        <div class="index flip">Q<small>♠</small></div>
+      </a>
+      <a class="pcard red" href="#/analyzer">
+        <div class="index">A<small>♥</small></div>
+        <div class="body">
+          <h3>Hand analyzer</h3>
+          <p>Pick your two cards and the dealer's upcard. See the value of every legal action — and the one play the math recommends.</p>
+        </div>
+        <div class="go">Analyze a hand →</div>
+        <div class="index flip">A<small>♥</small></div>
+      </a>
+      <a class="pcard" href="#/rules">
+        <div class="index">J<small>♣</small></div>
+        <div class="body">
+          <h3>How to play</h3>
+          <p>New to the table? Card values, the flow of a round, every action explained, dealer rules and payouts — written for a first-timer.</p>
+        </div>
+        <div class="go">Learn the game →</div>
+        <div class="index flip">J<small>♣</small></div>
+      </a>
+    </div>
+    <p class="hero-note">All figures on this site come from one expected-value engine, so the rankings and the analyzer always agree.</p>
+    <!-- AD SLOT: replace inner placeholder with your ad network code. Recommended: 728x90 leaderboard / 320x100 mobile banner, or a responsive unit. -->
+    <div class="ad-slot"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+  </div>
+</main>
+
+<!-- ============ RANKINGS ============ -->
+<main id="view-rankings" class="view">
+  <div class="eyebrow">Hand rankings</div>
+  <h1>Every start, ranked</h1>
+  <p class="lede">Each row is one player starting hand against one dealer upcard. Win, push and loss probabilities assume you play perfect basic strategy from that point on. Click a column header to sort.</p>
+
+  <div class="controls">
+    <div class="control">
+      <label for="f-type">Hand type</label>
+      <select id="f-type">
+        <option value="all">All hands</option>
+        <option value="hard">Hard totals</option>
+        <option value="soft">Soft totals</option>
+        <option value="pair">Pairs</option>
+      </select>
+    </div>
+    <div class="control">
+      <label for="f-up">Dealer upcard</label>
+      <select id="f-up">
+        <option value="all">All upcards</option>
+      </select>
+    </div>
+    <div class="count-note" id="row-count"></div>
+  </div>
+
+  <div class="table-wrap">
+    <table id="rank-table" aria-describedby="row-count">
+      <thead>
+        <tr>
+          <th class="sortable" data-key="hand">Your hand<span class="arrow"></span></th>
+          <th>Type</th>
+          <th class="sortable" data-key="up">Dealer shows<span class="arrow"></span></th>
+          <th>Best play</th>
+          <th class="sortable" data-key="win">Win %<span class="arrow"></span></th>
+          <th class="sortable" data-key="push">Push %<span class="arrow"></span></th>
+          <th class="sortable" data-key="ev">EV / unit<span class="arrow"></span></th>
+        </tr>
+      </thead>
+      <tbody id="rank-body"></tbody>
+    </table>
+  </div>
+  <p class="hero-note" style="text-align:left;margin-top:18px">Win % is the chance the hand wins money under the best non-surrender play. Where surrender is marked as the best play, it beats even that line's expected value by losing only half the bet. EV is the average profit per unit wagered.</p>
+  <!-- AD SLOT: replace inner placeholder with your ad network code. Recommended: 728x90 leaderboard or responsive unit. -->
+  <div class="ad-slot"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+</main>
+
+<!-- ============ ANALYZER ============ -->
+<main id="view-analyzer" class="view">
+  <div class="eyebrow">Hand analyzer</div>
+  <h1>What's the play?</h1>
+  <p class="lede">Select your two dealt cards and the dealer's upcard, then deal. Jack, Queen and King all count as 10.</p>
+
+  <div class="picker-grid">
+    <div class="picker">
+      <h3>Your two cards</h3>
+      <div class="rankrow" id="pick-cards" role="group" aria-label="Choose exactly two card ranks"></div>
+    </div>
+    <div class="picker">
+      <h3>Dealer's upcard</h3>
+      <div class="rankrow" id="pick-up" role="group" aria-label="Choose one dealer upcard"></div>
+    </div>
+  </div>
+
+  <div class="deal-row">
+    <button class="dealbtn" id="deal" disabled>Deal &amp; analyze</button>
+    <span class="deal-hint" id="deal-hint">Pick two of your cards and one dealer upcard.</span>
+  </div>
+
+  <section class="result" id="result" aria-live="polite"></section>
+  <!-- AD SLOT: replace inner placeholder with your ad network code. Recommended: 336x280 or 300x250 rectangle. -->
+  <div class="ad-slot rect"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+</main>
+
+<!-- ============ RULES ============ -->
+<main id="view-rules" class="view">
+  <div class="rules">
+    <div class="eyebrow">How to play</div>
+    <h1>Blackjack from zero</h1>
+    <p class="lede">Everything you need to sit down at a table for the first time. Five minutes, no jargon left unexplained.</p>
+
+    <h2>The goal</h2>
+    <p>You are not playing against other players — only against the dealer. The goal is to end the round with a card total <strong>higher than the dealer's without going over 21</strong>. Go over 21 and you <span class="term">bust</span>: you lose immediately, no matter what the dealer has.</p>
+
+    <h2>Card values</h2>
+    <ul>
+      <li>Cards <strong>2 through 10</strong> are worth their printed number.</li>
+      <li><strong>Jack, Queen and King</strong> ("face cards") are each worth <strong>10</strong>.</li>
+      <li>An <strong>Ace</strong> is worth <strong>1 or 11</strong> — whichever helps you more, decided automatically. It counts as 11 unless that would bust you, in which case it counts as 1.</li>
+    </ul>
+    <p>A hand containing an ace that is currently counted as 11 is called a <span class="term">soft hand</span> (for example, Ace + 6 is "soft 17"). It's called soft because you can never bust by taking one more card — the ace simply drops to 1 if needed. Any other hand is a <span class="term">hard hand</span> (10 + 7 is "hard 17").</p>
+
+    <h2>The flow of a round</h2>
+    <ol>
+      <li><strong>Bet.</strong> Place your wager before any cards are dealt.</li>
+      <li><strong>Deal.</strong> You receive two cards face up. The dealer gets two cards: one face up (the <span class="term">upcard</span>) and one face down (the <span class="term">hole card</span>).</li>
+      <li><strong>Blackjack check.</strong> If your first two cards are an Ace + a ten-value card, that's a <span class="term">blackjack</span> (or "natural") — the best possible hand. It wins immediately at 3:2 unless the dealer also has blackjack, in which case the round is a tie. If the dealer's upcard is an Ace or a ten, the dealer peeks at the hole card first to check for their own blackjack.</li>
+      <li><strong>Your turn.</strong> You act as many times as you like, choosing from the actions below, until you stand, bust, or double.</li>
+      <li><strong>Dealer's turn.</strong> The dealer reveals the hole card and plays by fixed rules — no decisions (see below).</li>
+      <li><strong>Settle.</strong> Hands are compared and bets are paid.</li>
+    </ol>
+
+    <h2>Your actions</h2>
+    <dl>
+      <dt>Hit</dt>
+      <dd>Take one more card. You may keep hitting until you stand or bust.</dd>
+      <dt>Stand</dt>
+      <dd>Take no more cards. Your total is locked in and the turn passes on.</dd>
+      <dt>Double down</dt>
+      <dd>Double your bet, receive <strong>exactly one</strong> more card, and stand automatically. Allowed on any two-card starting hand at this table. High reward when the odds favor you, but you give up the right to keep hitting.</dd>
+      <dt>Split</dt>
+      <dd>If your two cards are the same rank (a <span class="term">pair</span>), you may split them into two separate hands, placing a second bet equal to your first. Each hand gets a new second card and is then played on its own. Split aces are an exception: each ace receives just one card.</dd>
+      <dt>Surrender</dt>
+      <dd>Give up your starting hand immediately and take back <strong>half</strong> your bet. Only available as your very first decision, and only worth it in a few clearly losing spots (the analyzer will show you which).</dd>
+    </dl>
+
+    <!-- AD SLOT: replace inner placeholder with your ad network code. Recommended: 336x280 or 300x250 rectangle. -->
+    <div class="ad-slot rect"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+
+    <h2>Dealer rules</h2>
+    <p>The dealer has no choices. They must <strong>hit on 16 or less</strong> and <strong>stand on 17 or more</strong> — at this table, that includes standing on soft 17. The dealer never doubles, splits or surrenders. If the dealer busts, every player hand still standing wins.</p>
+    <div class="callout">This fixed behavior is the entire reason strategy exists: because the dealer's play is mechanical, the correct response to every situation can be calculated — which is exactly what the rest of this site does.</div>
+
+    <h2>Payouts</h2>
+    <ul>
+      <li><strong>Blackjack (natural):</strong> pays 3:2 — bet 10, win 15.</li>
+      <li><strong>Regular win:</strong> pays 1:1 — bet 10, win 10.</li>
+      <li><strong>Tie ("push"):</strong> nobody wins; your bet is returned.</li>
+      <li><strong>Loss or bust:</strong> your bet is gone.</li>
+      <li><strong>Surrender:</strong> you lose exactly half your bet.</li>
+    </ul>
+
+    <h2>Quick glossary</h2>
+    <dl>
+      <dt>Bust</dt><dd>A total over 21. An immediate loss.</dd>
+      <dt>Soft hand</dt><dd>A hand with an ace counted as 11. Can't bust on the next card.</dd>
+      <dt>Hard hand</dt><dd>A hand with no ace, or with every ace forced to count as 1.</dd>
+      <dt>Push</dt><dd>A tie with the dealer. Your bet is returned.</dd>
+      <dt>Basic strategy</dt><dd>The mathematically best action for every hand vs. upcard combination — the strategy behind every number on this site.</dd>
+    </dl>
+  </div>
+</main>
+
+<footer>
+  Methodology: all probabilities and expected values are computed live by an exact expected-value engine (infinite-deck model, a standard close approximation of a 6-deck shoe) under the rules shown on the front page: dealer stands on soft 17, double on any two cards including after splits, split aces receive one card, no resplits, late surrender available, blackjack pays 3:2, values conditioned on the dealer not holding a natural. Results match standard published basic strategy tables. Because both the rankings and the analyzer query the same engine, their numbers always agree. For entertainment and education — every blackjack hand except a handful carries a negative expectation, and the game as a whole favors the house.
+</footer>
+
+<!-- AD SLOT (mobile anchor): replace inner placeholder with your ad network code. Recommended: 320x50 anchor/adaptive banner. Shown only on screens ≤640px wide; the × lets users dismiss it. -->
+<div class="ad-anchor" id="ad-anchor">
+  <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">×</button>
+  <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>document.body.classList.add("has-anchor");</script>
+
+<script>
+"use strict";
+/* ================================================================
+   Expected-value engine (infinite-deck / 6-deck approximation)
+   Rules: S17, double any two, DAS, split aces one card, no resplit,
+   late surrender, EVs conditioned on dealer having no natural.
+   ================================================================ */
+const VALS = [2,3,4,5,6,7,8,9,10,11];          // 11 = Ace
+const PROB = v => (v === 10 ? 4/13 : 1/13);
+
+function addCard(t, soft, v){
+  if (v === 11){
+    if (t + 11 <= 21) return {t: t + 11, soft: true};
+    return {t: t + 1, soft};
+  }
+  let nt = t + v;
+  if (nt > 21 && soft) return {t: nt - 10, soft: false};
+  return {t: nt, soft};
+}
+
+/* ---- Dealer: distribution of final totals, S17 ---- */
+const dealerMemo = new Map();
+function dealerPlay(t, soft){            // -> {17:..,18:..,19:..,20:..,21:..,bust:..}
+  if (t > 21) return {bust: 1};
+  if (t >= 17){ const o = {}; o[t] = 1; return o; }
+  const key = t + (soft ? "s" : "h");
+  if (dealerMemo.has(key)) return dealerMemo.get(key);
+  const out = {};
+  for (const v of VALS){
+    const s = addCard(t, soft, v);
+    const sub = dealerPlay(s.t, s.soft);
+    for (const k in sub) out[k] = (out[k] || 0) + PROB(v) * sub[k];
+  }
+  dealerMemo.set(key, out);
+  return out;
+}
+function dealerDist(up){                 // conditioned: no dealer blackjack
+  const start = addCard(0, false, up);
+  const out = {};
+  let holeProbs;
+  if (up === 11)      holeProbs = VALS.filter(v => v !== 10).map(v => [v, PROB(v) / (9/13)]);
+  else if (up === 10) holeProbs = VALS.filter(v => v !== 11).map(v => [v, PROB(v) / (12/13)]);
+  else                holeProbs = VALS.map(v => [v, PROB(v)]);
+  for (const [v, p] of holeProbs){
+    const s = addCard(start.t, start.soft, v);
+    const sub = dealerPlay(s.t, s.soft);
+    for (const k in sub) out[k] = (out[k] || 0) + p * sub[k];
+  }
+  return out;
+}
+
+/* ---- Per-upcard player engine ---- */
+function makeEngine(up){
+  const D = dealerDist(up);
+  const LOSE = {w:0, p:0, l:1};
+
+  function standRes(t){
+    if (t > 21) return LOSE;
+    let w = D.bust || 0, p = 0, l = 0;
+    for (const k in D){
+      if (k === "bust") continue;
+      const d = +k;
+      if (d < t) w += D[k];
+      else if (d === t) p += D[k];
+      else l += D[k];
+    }
+    return {w, p, l};
+  }
+  const ev1 = r => r.w - r.l;            // single-unit EV of an outcome dist
+
+  const playMemo = new Map();
+  function playOut(t, soft){             // optimal hit/stand from here (EV-max)
+    const key = t + (soft ? "s" : "h");
+    if (playMemo.has(key)) return playMemo.get(key);
+    const st = standRes(t);
+    let res = {w: st.w, p: st.p, l: st.l, ev: ev1(st)};
+    if (t < 21){
+      let hw = 0, hp = 0, hl = 0;
+      for (const v of VALS){
+        const s = addCard(t, soft, v);
+        const sub = s.t > 21 ? {w:0,p:0,l:1,ev:-1} : playOut(s.t, s.soft);
+        hw += PROB(v)*sub.w; hp += PROB(v)*sub.p; hl += PROB(v)*sub.l;
+      }
+      const hev = hw - hl;
+      if (hev > res.ev) res = {w:hw, p:hp, l:hl, ev:hev};
+    }
+    playMemo.set(key, res);
+    return res;
+  }
+
+  function hitRes(t, soft){              // hit once, then play optimally
+    let w=0,p=0,l=0;
+    for (const v of VALS){
+      const s = addCard(t, soft, v);
+      const sub = s.t > 21 ? {w:0,p:0,l:1} : playOut(s.t, s.soft);
+      w += PROB(v)*sub.w; p += PROB(v)*sub.p; l += PROB(v)*sub.l;
+    }
+    return {w, p, l, ev: w - l};
+  }
+
+  function doubleRes(t, soft){           // one card, forced stand, 2x bet
+    let w=0,p=0,l=0;
+    for (const v of VALS){
+      const s = addCard(t, soft, v);
+      const sub = s.t > 21 ? LOSE : standRes(s.t);
+      w += PROB(v)*sub.w; p += PROB(v)*sub.p; l += PROB(v)*sub.l;
+    }
+    return {w, p, l, ev: 2*(w - l)};
+  }
+
+  function splitRes(pv){                 // per-hand outcome; EV is for both hands
+    let w=0,p=0,l=0,ev=0;
+    const base = addCard(0, false, pv);
+    for (const v of VALS){
+      const h = addCard(base.t, base.soft, v);
+      let sub;
+      if (pv === 11){                    // split aces: one card only
+        const st = standRes(h.t);
+        sub = {w:st.w, p:st.p, l:st.l, ev: ev1(st)};
+      } else {
+        const st = standRes(h.t);
+        const cand = [{w:st.w,p:st.p,l:st.l,ev:ev1(st)}, hitRes(h.t, h.soft), doubleRes(h.t, h.soft)];
+        sub = cand.reduce((a,b) => b.ev > a.ev ? b : a);
+      }
+      w += PROB(v)*sub.w; p += PROB(v)*sub.p; l += PROB(v)*sub.l; ev += PROB(v)*sub.ev;
+    }
+    return {w, p, l, ev: 2*ev};          // win/push/loss shown per split hand
+  }
+
+  function analyze(t, soft, pairVal){    // all first-decision actions
+    const st = standRes(t);
+    const acts = [
+      {name:"Stand",     ...{w:st.w,p:st.p,l:st.l}, ev: ev1(st)},
+      {name:"Hit",       ...hitRes(t, soft)},
+      {name:"Double",    ...doubleRes(t, soft)},
+    ];
+    if (pairVal) acts.push({name:"Split", ...splitRes(pairVal)});
+    acts.push({name:"Surrender", w:0, p:0, l:1, ev:-0.5, surr:true});
+    const best = acts.reduce((a,b) => b.ev > a.ev ? b : a);
+    const bestPlayable = acts.filter(a => !a.surr).reduce((a,b) => b.ev > a.ev ? b : a);
+    return {acts, best, bestPlayable};
+  }
+  return {analyze};
+}
+const engines = new Map();
+const engineFor = up => { if(!engines.has(up)) engines.set(up, makeEngine(up)); return engines.get(up); };
+
+/* ================================================================
+   Rankings data
+   ================================================================ */
+const UPCARDS = [2,3,4,5,6,7,8,9,10,11];
+const upLabel = v => v === 11 ? "A" : String(v);
+const HANDS = [];
+for (let t = 5; t <= 20; t++) HANDS.push({label:"Hard " + t, type:"hard", t, soft:false, pair:0, order:t});
+for (let k = 2; k <= 9; k++)  HANDS.push({label:"A," + k + " (soft " + (11+k) + ")", type:"soft", t:11+k, soft:true, pair:0, order:100+k});
+for (const v of [2,3,4,5,6,7,8,9,10,11]){
+  const lbl = v === 11 ? "A,A" : (v + "," + v);
+  const st = v === 11 ? {t:12, soft:true} : {t:2*v, soft:false};
+  HANDS.push({label:lbl, type:"pair", t:st.t, soft:st.soft, pair:v, order:200+v});
+}
+const ROWS = [];
+for (const h of HANDS){
+  for (const up of UPCARDS){
+    const r = engineFor(up).analyze(h.t, h.soft, h.pair);
+    ROWS.push({
+      hand: h.label, type: h.type, order: h.order, up,
+      best: r.best.name,
+      win: r.bestPlayable.w, push: r.bestPlayable.p,
+      ev: r.best.ev
+    });
+  }
+}
+
+/* ================================================================
+   Rankings UI
+   ================================================================ */
+const fmtPct = x => (100*x).toFixed(1) + "%";
+const fmtEV  = x => (x >= 0 ? "+" : "\u2212") + Math.abs(x).toFixed(3);
+let sortKey = "win", sortDir = -1;
+
+const fType = document.getElementById("f-type");
+const fUp = document.getElementById("f-up");
+for (const up of UPCARDS){
+  const o = document.createElement("option");
+  o.value = up; o.textContent = "Dealer " + upLabel(up);
+  fUp.appendChild(o);
+}
+function renderTable(){
+  let rows = ROWS.filter(r =>
+    (fType.value === "all" || r.type === fType.value) &&
+    (fUp.value === "all" || String(r.up) === fUp.value));
+  const dir = sortDir;
+  rows.sort((a,b) => {
+    let d = 0;
+    if (sortKey === "hand") d = a.order - b.order;
+    else if (sortKey === "up") d = a.up - b.up;
+    else d = a[sortKey] - b[sortKey];
+    if (d === 0) d = b.win - a.win;
+    return d * dir;
+  });
+  const maxWin = 0.7;
+  const body = document.getElementById("rank-body");
+  body.innerHTML = rows.map(r => `
+    <tr>
+      <td><span class="handchip">${r.hand}</span></td>
+      <td><span class="typetag ${r.type === "pair" ? "pair" : ""}">${r.type}</span></td>
+      <td class="num">${upLabel(r.up)}</td>
+      <td class="playtag">${r.best}</td>
+      <td class="num"><span class="winbar"><i style="width:${Math.min(100, 100*r.win/maxWin)}%"></i></span>${fmtPct(r.win)}</td>
+      <td class="num">${fmtPct(r.push)}</td>
+      <td class="num ${r.ev >= 0 ? "ev-pos" : "ev-neg"}">${fmtEV(r.ev)}</td>
+    </tr>`).join("");
+  document.getElementById("row-count").textContent = rows.length + " of " + ROWS.length + " combinations";
+  document.querySelectorAll("#rank-table thead th.sortable").forEach(th => {
+    th.querySelector(".arrow").textContent =
+      th.dataset.key === sortKey ? (sortDir === -1 ? " \u25BE" : " \u25B4") : "";
+  });
+}
+document.querySelectorAll("#rank-table thead th.sortable").forEach(th => {
+  th.addEventListener("click", () => {
+    const k = th.dataset.key;
+    if (sortKey === k) sortDir *= -1;
+    else { sortKey = k; sortDir = (k === "hand" || k === "up") ? 1 : -1; }
+    renderTable();
+  });
+});
+fType.addEventListener("change", renderTable);
+fUp.addEventListener("change", renderTable);
+renderTable();
+
+/* ================================================================
+   Analyzer UI
+   ================================================================ */
+const RANKS = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
+const rankVal = r => r === "A" ? 11 : (["J","Q","K","10"].includes(r) ? 10 : +r);
+let myCards = [];   // up to 2 rank strings
+let upPick = null;  // rank string
+
+function buildRow(el, onClick){
+  RANKS.forEach(r => {
+    const b = document.createElement("button");
+    b.className = "rankbtn"; b.type = "button";
+    b.textContent = r; b.dataset.rank = r;
+    b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", () => onClick(r, b));
+    el.appendChild(b);
+  });
+}
+const cardRow = document.getElementById("pick-cards");
+const upRow = document.getElementById("pick-up");
+buildRow(cardRow, (r) => {
+  const count = myCards.filter(x => x === r).length;
+  if (count === 2){                              // pair selected: remove one
+    myCards.splice(myCards.indexOf(r), 1);
+  } else if (myCards.length < 2){
+    myCards.push(r);                             // add (second click makes a pair)
+  } else if (count === 1){
+    myCards.splice(myCards.indexOf(r), 1);       // hand full: deselect this rank
+  } else {
+    myCards.shift(); myCards.push(r);            // hand full: replace oldest
+  }
+  syncPickers();
+});
+buildRow(upRow, (r) => { upPick = (upPick === r) ? null : r; syncPickers(); });
+
+const dealBtn = document.getElementById("deal");
+const hint = document.getElementById("deal-hint");
+function syncPickers(){
+  cardRow.querySelectorAll(".rankbtn").forEach(b => {
+    const n = myCards.filter(x => x === b.dataset.rank).length;
+    b.setAttribute("aria-pressed", n > 0 ? "true" : "false");
+    b.textContent = n === 2 ? b.dataset.rank + "\u00D72" : b.dataset.rank;
+  });
+  upRow.querySelectorAll(".rankbtn").forEach(b =>
+    b.setAttribute("aria-pressed", b.dataset.rank === upPick ? "true" : "false"));
+  const ready = myCards.length === 2 && upPick;
+  dealBtn.disabled = !ready;
+  hint.textContent = ready
+    ? "Your " + myCards.join(" + ") + " vs. dealer " + upPick + " \u2014 ready."
+    : (myCards.length < 2 ? "Pick " + (2 - myCards.length) + " more of your cards. " : "") +
+      (!upPick ? "Pick one dealer upcard." : "");
+}
+syncPickers();
+
+function handName(v1, v2){
+  const isPair = v1 === v2;
+  const s = addCard(0,false,v1), s2 = addCard(s.t, s.soft, v2);
+  if (isPair) return {name: "Pair of " + (v1 === 11 ? "Aces" : v1 + "s"), t:s2.t, soft:s2.soft, pair:v1};
+  return {name: (s2.soft ? "Soft " : "Hard ") + s2.t, t:s2.t, soft:s2.soft, pair:0};
+}
+const outBar = a => {
+  const tot = a.w + a.p + a.l || 1;
+  return `<div class="outbar" aria-hidden="true">
+    <span class="w" style="width:${100*a.w/tot}%"></span>
+    <span class="p" style="width:${100*a.p/tot}%"></span>
+    <span class="l" style="width:${100*a.l/tot}%"></span></div>`;
+};
+
+dealBtn.addEventListener("click", () => {
+  const v1 = rankVal(myCards[0]), v2 = rankVal(myCards[1]);
+  const upV = rankVal(upPick);
+  const box = document.getElementById("result");
+  box.classList.add("show");
+
+  if ((v1 === 11 && v2 === 10) || (v1 === 10 && v2 === 11)){
+    box.innerHTML = `<div class="bj-banner"><b>Blackjack!</b>
+      <p>${myCards.join(" + ")} is a natural 21. No decision to make \u2014 it pays 3:2 immediately.
+      The only hand that doesn't lose to it is a dealer blackjack, which pushes.</p></div>`;
+    box.scrollIntoView({behavior:"smooth", block:"nearest"});
+    return;
+  }
+
+  const h = handName(v1, v2);
+  const res = engineFor(upV).analyze(h.t, h.soft, h.pair);
+  const bp = res.bestPlayable;
+  const rows = res.acts.map(a => {
+    const isBest = a === res.best;
+    const stats = a.surr
+      ? `<b>${fmtEV(a.ev)}</b> EV \u00B7 lose half, always`
+      : `<b>${fmtEV(a.ev)}</b> EV \u00B7 win ${fmtPct(a.w)}${a.name === "Split" ? " / hand" : ""}`;
+    return `<div class="actrow ${isBest ? "best" : ""}">
+      <div class="aname">${a.name}</div>
+      ${a.surr ? '<div class="outbar" aria-hidden="true"><span class="l" style="width:100%;opacity:.45"></span></div>' : outBar(a)}
+      <div class="stats">${stats}</div></div>`;
+  }).join("");
+
+  box.innerHTML = `
+    <div class="result-head">
+      <span class="handname">${h.name}</span>
+      <span class="vs">${myCards.join(" + ")} vs. dealer ${upPick}</span>
+      <span class="bigwin">win chance with best play <b>${fmtPct(bp.w)}</b></span>
+    </div>
+    <div class="reco"><span class="medal">\u2605</span><div><b>${res.best.name}</b>
+      <span> \u2014 basic strategy's recommended play (${fmtEV(res.best.ev)} expected value per unit bet)</span></div></div>
+    <div class="actions">${rows}</div>
+    <div class="legend">
+      <span><i style="background:var(--good)"></i>win</span>
+      <span><i style="background:var(--push)"></i>push</span>
+      <span><i style="background:var(--bad)"></i>lose</span>
+      ${h.pair ? "" : "<span style='margin-left:auto'>Split is only offered when your two cards match.</span>"}
+    </div>`;
+  box.scrollIntoView({behavior:"smooth", block:"nearest"});
+});
+
+/* ================================================================
+   AdSense: initialize a unit only once its container is visible
+   ================================================================ */
+function initAds(scope){
+  scope.querySelectorAll("ins.adsbygoogle:not([data-adsbygoogle-status])").forEach(() => {
+    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+  });
+}
+
+/* ================================================================
+   Hash routing
+   ================================================================ */
+const routes = {"": "home", "/": "home", "/rankings": "rankings", "/analyzer": "analyzer", "/rules": "rules"};
+function route(){
+  const h = location.hash.replace(/^#/, "");
+  const name = routes[h] || "home";
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  const active = document.getElementById("view-" + name);
+  active.classList.add("active");
+  document.querySelectorAll(".nav a.navlink").forEach(a => {
+    if (a.dataset.route === name) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+  });
+  window.scrollTo(0, 0);
+  initAds(active);
+}
+window.addEventListener("hashchange", route);
+route();
+const anchor = document.getElementById("ad-anchor");
+if (anchor && window.innerWidth <= 640) initAds(anchor);
+</script>
+</body>
+</html>
