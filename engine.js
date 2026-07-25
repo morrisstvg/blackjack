@@ -1,9 +1,10 @@
 "use strict";
-
 /* ================================================================
-   Expected-value engine (infinite-deck / 6-deck approximation)
-   Rules: S17, double any two, DAS, split aces one card, no resplit,
-   late surrender, EVs conditioned on dealer having no natural.
+   Expected-value engine.
+   Default: infinite-deck (6-deck approximation), S17, surrender on.
+   Options per engine: {h17: bool, probs: {value: probability}}
+   With custom probs, draws use the current shoe's frequencies
+   (fixed-fraction approximation: draws don't further deplete it).
    ================================================================ */
 const VALS = [2,3,4,5,6,7,8,9,10,11];          // 11 = Ace
 const PROB = v => (v === 10 ? 4/13 : 1/13);
@@ -18,42 +19,50 @@ function addCard(t, soft, v){
   return {t: nt, soft};
 }
 
-/* ---- Dealer: distribution of final totals, S17 ---- */
-const dealerMemo = new Map();
-function dealerPlay(t, soft){            // -> {17:..,18:..,19:..,20:..,21:..,bust:..}
-  if (t > 21) return {bust: 1};
-  if (t >= 17){ const o = {}; o[t] = 1; return o; }
-  const key = t + (soft ? "s" : "h");
-  if (dealerMemo.has(key)) return dealerMemo.get(key);
-  const out = {};
-  for (const v of VALS){
-    const s = addCard(t, soft, v);
-    const sub = dealerPlay(s.t, s.soft);
-    for (const k in sub) out[k] = (out[k] || 0) + PROB(v) * sub[k];
+function makeEngine(up, opts){
+  opts = opts || {};
+  const h17 = !!opts.h17;
+  const P = opts.probs ? (v => opts.probs[v] || 0) : PROB;
+
+  /* ---- Dealer: distribution of final totals ---- */
+  const dMemo = new Map();
+  function dPlay(t, soft){
+    if (t > 21) return {bust: 1};
+    if (t > 17 || (t === 17 && !(soft && h17))){ const o = {}; o[t] = 1; return o; }
+    const key = t + (soft ? "s" : "h");
+    if (dMemo.has(key)) return dMemo.get(key);
+    const out = {};
+    for (const v of VALS){
+      const s = addCard(t, soft, v);
+      const sub = dPlay(s.t, s.soft);
+      for (const k in sub) out[k] = (out[k] || 0) + P(v) * sub[k];
+    }
+    dMemo.set(key, out);
+    return out;
   }
-  dealerMemo.set(key, out);
-  return out;
-}
-function dealerDist(up){                 // conditioned: no dealer blackjack
+  // conditioned on the dealer not holding a natural
   const start = addCard(0, false, up);
-  const out = {};
-  let holeProbs;
-  if (up === 11)      holeProbs = VALS.filter(v => v !== 10).map(v => [v, PROB(v) / (9/13)]);
-  else if (up === 10) holeProbs = VALS.filter(v => v !== 11).map(v => [v, PROB(v) / (12/13)]);
-  else                holeProbs = VALS.map(v => [v, PROB(v)]);
-  for (const [v, p] of holeProbs){
-    const s = addCard(start.t, start.soft, v);
-    const sub = dealerPlay(s.t, s.soft);
-    for (const k in sub) out[k] = (out[k] || 0) + p * sub[k];
+  const D = {};
+  {
+    let holeProbs;
+    if (up === 11){
+      const mass = Math.max(1 - P(10), 1e-9);
+      holeProbs = VALS.filter(v => v !== 10).map(v => [v, P(v) / mass]);
+    } else if (up === 10){
+      const mass = Math.max(1 - P(11), 1e-9);
+      holeProbs = VALS.filter(v => v !== 11).map(v => [v, P(v) / mass]);
+    } else {
+      holeProbs = VALS.map(v => [v, P(v)]);
+    }
+    for (const [v, p] of holeProbs){
+      const s = addCard(start.t, start.soft, v);
+      const sub = dPlay(s.t, s.soft);
+      for (const k in sub) D[k] = (D[k] || 0) + p * sub[k];
+    }
   }
-  return out;
-}
 
-/* ---- Per-upcard player engine ---- */
-function makeEngine(up){
-  const D = dealerDist(up);
+  /* ---- Player ---- */
   const LOSE = {w:0, p:0, l:1};
-
   function standRes(t){
     if (t > 21) return LOSE;
     let w = D.bust || 0, p = 0, l = 0;
@@ -66,10 +75,10 @@ function makeEngine(up){
     }
     return {w, p, l};
   }
-  const ev1 = r => r.w - r.l;            // single-unit EV of an outcome dist
+  const ev1 = r => r.w - r.l;
 
   const playMemo = new Map();
-  function playOut(t, soft){             // optimal hit/stand from here (EV-max)
+  function playOut(t, soft){
     const key = t + (soft ? "s" : "h");
     if (playMemo.has(key)) return playMemo.get(key);
     const st = standRes(t);
@@ -79,7 +88,7 @@ function makeEngine(up){
       for (const v of VALS){
         const s = addCard(t, soft, v);
         const sub = s.t > 21 ? {w:0,p:0,l:1,ev:-1} : playOut(s.t, s.soft);
-        hw += PROB(v)*sub.w; hp += PROB(v)*sub.p; hl += PROB(v)*sub.l;
+        hw += P(v)*sub.w; hp += P(v)*sub.p; hl += P(v)*sub.l;
       }
       const hev = hw - hl;
       if (hev > res.ev) res = {w:hw, p:hp, l:hl, ev:hev};
@@ -88,33 +97,33 @@ function makeEngine(up){
     return res;
   }
 
-  function hitRes(t, soft){              // hit once, then play optimally
+  function hitRes(t, soft){
     let w=0,p=0,l=0;
     for (const v of VALS){
       const s = addCard(t, soft, v);
       const sub = s.t > 21 ? {w:0,p:0,l:1} : playOut(s.t, s.soft);
-      w += PROB(v)*sub.w; p += PROB(v)*sub.p; l += PROB(v)*sub.l;
+      w += P(v)*sub.w; p += P(v)*sub.p; l += P(v)*sub.l;
     }
     return {w, p, l, ev: w - l};
   }
 
-  function doubleRes(t, soft){           // one card, forced stand, 2x bet
+  function doubleRes(t, soft){
     let w=0,p=0,l=0;
     for (const v of VALS){
       const s = addCard(t, soft, v);
       const sub = s.t > 21 ? LOSE : standRes(s.t);
-      w += PROB(v)*sub.w; p += PROB(v)*sub.p; l += PROB(v)*sub.l;
+      w += P(v)*sub.w; p += P(v)*sub.p; l += P(v)*sub.l;
     }
     return {w, p, l, ev: 2*(w - l)};
   }
 
-  function splitRes(pv){                 // per-hand outcome; EV is for both hands
+  function splitRes(pv){
     let w=0,p=0,l=0,ev=0;
     const base = addCard(0, false, pv);
     for (const v of VALS){
       const h = addCard(base.t, base.soft, v);
       let sub;
-      if (pv === 11){                    // split aces: one card only
+      if (pv === 11){
         const st = standRes(h.t);
         sub = {w:st.w, p:st.p, l:st.l, ev: ev1(st)};
       } else {
@@ -122,31 +131,34 @@ function makeEngine(up){
         const cand = [{w:st.w,p:st.p,l:st.l,ev:ev1(st)}, hitRes(h.t, h.soft), doubleRes(h.t, h.soft)];
         sub = cand.reduce((a,b) => b.ev > a.ev ? b : a);
       }
-      w += PROB(v)*sub.w; p += PROB(v)*sub.p; l += PROB(v)*sub.l; ev += PROB(v)*sub.ev;
+      w += P(v)*sub.w; p += P(v)*sub.p; l += P(v)*sub.l; ev += P(v)*sub.ev;
     }
-    return {w, p, l, ev: 2*ev};          // win/push/loss shown per split hand
+    return {w, p, l, ev: 2*ev};
   }
 
-  function analyze(t, soft, pairVal){    // all first-decision actions
+  function analyze(t, soft, pairVal, allowSurrender){
+    if (allowSurrender === undefined) allowSurrender = true;
     const st = standRes(t);
     const acts = [
-      {name:"Stand",     ...{w:st.w,p:st.p,l:st.l}, ev: ev1(st)},
-      {name:"Hit",       ...hitRes(t, soft)},
-      {name:"Double",    ...doubleRes(t, soft)},
+      {name:"Stand",  w:st.w, p:st.p, l:st.l, ev: ev1(st)},
+      {name:"Hit",    ...hitRes(t, soft)},
+      {name:"Double", ...doubleRes(t, soft)},
     ];
     if (pairVal) acts.push({name:"Split", ...splitRes(pairVal)});
-    acts.push({name:"Surrender", w:0, p:0, l:1, ev:-0.5, surr:true});
+    if (allowSurrender) acts.push({name:"Surrender", w:0, p:0, l:1, ev:-0.5, surr:true});
     const best = acts.reduce((a,b) => b.ev > a.ev ? b : a);
     const bestPlayable = acts.filter(a => !a.surr).reduce((a,b) => b.ev > a.ev ? b : a);
     return {acts, best, bestPlayable};
   }
-  return {analyze, dealerBust: D.bust || 0};
+  return {analyze, dealerBust: D.bust || 0, P};
 }
+
+/* default engines (S17, full shoe) used by rankings + chart pages */
 const engines = new Map();
 const engineFor = up => { if(!engines.has(up)) engines.set(up, makeEngine(up)); return engines.get(up); };
 
 /* ================================================================
-   Rankings data
+   Rankings data (default rules)
    ================================================================ */
 const UPCARDS = [2,3,4,5,6,7,8,9,10,11];
 const upLabel = v => v === 11 ? "A" : String(v);
@@ -170,7 +182,5 @@ for (const h of HANDS){
     });
   }
 }
-
-
 const fmtPct = x => (100*x).toFixed(1) + "%";
 const fmtEV  = x => (x >= 0 ? "+" : "\u2212") + Math.abs(x).toFixed(3);

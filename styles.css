@@ -327,3 +327,24 @@ footer{
 
 /* multi-page: each page shows its single view */
 .view{display:block}
+
+/* ---------- Analyzer settings & shoe panel ---------- */
+.seg{display:inline-flex;border:1px solid var(--felt-line);border-radius:8px;overflow:hidden}
+.seg button{background:transparent;color:var(--mist);border:none;padding:8px 16px;font-size:.85rem;cursor:pointer;font-family:"Archivo",sans-serif}
+.seg button[aria-pressed="true"]{background:var(--gilt);color:var(--felt-deep);font-weight:600}
+.ghostbtn{background:transparent;border:1px solid var(--felt-line);color:var(--stock);border-radius:8px;padding:9px 16px;font-size:.85rem;cursor:pointer;font-family:"Archivo",sans-serif}
+.ghostbtn:hover{border-color:var(--gilt);color:var(--gilt)}
+.shoe-panel{margin:20px 0 4px;padding:18px;border:1px solid var(--felt-line);border-radius:var(--radius);background:rgba(0,0,0,.18)}
+.shoe-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.shoe-head h3{font-family:"Spline Sans Mono",monospace;font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--mist)}
+.shoe-note{font-size:.82rem;color:var(--mist);margin-bottom:14px;max-width:70ch}
+.shoe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.shoe-item{display:flex;align-items:center;gap:8px;border:1px solid var(--felt-line);border-radius:8px;padding:6px 10px;background:rgba(0,0,0,.15)}
+.shoe-item .r{font-family:"Fraunces",serif;font-weight:700;width:24px;color:var(--stock)}
+.cbtn{width:26px;height:26px;border-radius:6px;border:1px solid var(--felt-line);background:var(--felt-deep);color:var(--stock);cursor:pointer;font-size:.9rem;line-height:1}
+.cbtn:hover:not(:disabled){border-color:var(--gilt)}
+.cbtn:disabled{opacity:.3;cursor:not-allowed}
+.shoe-item .cnt{font-family:"Spline Sans Mono",monospace;min-width:20px;text-align:center;color:var(--stock)}
+.shoe-item .left{font-size:.66rem;color:var(--mist-dim);font-family:"Spline Sans Mono",monospace;margin-left:auto}
+.rulechips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+.rulechips span{font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1px solid var(--felt-line);color:var(--mist)}

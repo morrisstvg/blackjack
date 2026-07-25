@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackjack Hand Analyzer: the Best Play for Any Hand — Best Blackjack Hands</title>
+<meta name="description" content="Enter your two cards and the dealer's upcard to see the exact expected value of hitting, standing, doubling, splitting or surrendering — and why one play is best.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230E2A20'/%3E%3Ctext x='50' y='74' font-size='66' text-anchor='middle' fill='%23C9A24B'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
+     crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a class="wordmark" href="index.html"><span class="pip">♠</span>Best<span class="long"> Blackjack</span> Hands</a>
+    <a class="navlink" href="index.html" data-route="home">Overview</a>
+    <a class="navlink" href="rankings.html" data-route="rankings">Hand rankings</a>
+    <a class="navlink" href="analyzer.html" data-route="analyzer" aria-current="page">Hand analyzer</a>
+    <a class="navlink" href="chart.html" data-route="chart">Strategy chart</a>
+    <a class="navlink" href="rules.html" data-route="rules">How to play</a>
+  </div>
+</nav>
+
+<!-- ============ ANALYZER ============ -->
+<main id="view-analyzer" class="view">
+  <div class="eyebrow">Hand analyzer</div>
+  <h1>What's the play?</h1>
+  <p class="lede">Select your two dealt cards and the dealer's upcard, then deal. Jack, Queen and King all count as 10. The settings below override the site's default table rules on this page only.</p>
+
+  <div class="controls">
+    <div class="control"><label>Surrender allowed</label>
+      <div class="seg" id="set-surr" role="group" aria-label="Surrender allowed"><button type="button" data-val="yes" aria-pressed="true">Yes</button><button type="button" data-val="no" aria-pressed="false">No</button></div>
+    </div>
+    <div class="control"><label>Dealer on soft 17</label>
+      <div class="seg" id="set-h17" role="group" aria-label="Dealer rule on soft 17"><button type="button" data-val="s" aria-pressed="true">Stands</button><button type="button" data-val="h" aria-pressed="false">Hits</button></div>
+    </div>
+    <div class="control"><label>Shoe</label>
+      <button class="ghostbtn" id="shoe-toggle" aria-expanded="false" aria-controls="shoe-panel">Shoe composition ▾</button>
+    </div>
+    <div class="control"><label>Hand</label>
+      <button class="ghostbtn" id="reset-hand">Reset hand</button>
+    </div>
+  </div>
+
+  <div class="picker-grid">
+    <div class="picker">
+      <h3>Your two cards</h3>
+      <div class="rankrow" id="pick-cards" role="group" aria-label="Choose exactly two card ranks"></div>
+    </div>
+    <div class="picker">
+      <h3>Dealer's upcard</h3>
+      <div class="rankrow" id="pick-up" role="group" aria-label="Choose one dealer upcard"></div>
+    </div>
+  </div>
+
+  <div class="shoe-panel" id="shoe-panel" hidden>
+    <div class="shoe-head">
+      <h3>Cards already dealt from the shoe</h3>
+      <button class="ghostbtn" id="reset-shoe">Reset shoe</button>
+    </div>
+    <p class="shoe-note">Mark cards you've seen leave the shoe — other players' hands, the dealer's earlier rounds. Your own two cards and the dealer's upcard are removed automatically. Six decks means 24 of each rank. With nothing marked, this page uses the same full-shoe model as the rest of the site; with cards marked, all odds are recomputed from the remaining shoe's frequencies.</p>
+    <div class="shoe-grid" id="shoe-grid"></div>
+  </div>
+
+  <div class="deal-row">
+    <button class="dealbtn" id="deal" disabled>Deal &amp; analyze</button>
+    <span class="deal-hint" id="deal-hint">Pick two of your cards and one dealer upcard.</span>
+  </div>
+
+  <section class="result" id="result" aria-live="polite"></section>
+  <!-- AD SLOT: replace inner placeholder with your ad network code. Recommended: 336x280 or 300x250 rectangle. -->
+  <div class="ad-slot rect"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+</main>
+
+
+<footer>
+  <p><strong>Methodology &amp; sources:</strong> all probabilities and expected values are computed live by an exact expected-value engine (infinite-deck model, a standard close approximation of a 6-deck shoe) under the rules shown on the front page: dealer stands on soft 17, double on any two cards including after splits, split aces receive one card, no resplits, late surrender available, blackjack pays 3:2, values conditioned on the dealer not holding a natural. Results agree with standard published expected-value references for these rules, such as the Wizard of Odds infinite-deck expected value tables and Griffin's <em>The Theory of Blackjack</em>. Because every page queries the same engine, the numbers always agree with each other.</p>
+  <p style="margin-top:10px">For education and entertainment only — blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
+  <p style="margin-top:10px">Last updated: July 24, 2026 · <a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of use</a></p>
+</footer>
+
+<!-- AD SLOT (mobile anchor): shown only ≤640px wide. Replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
+<div class="ad-anchor" id="ad-anchor">
+  <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">×</button>
+  <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>document.body.classList.add("has-anchor");</script>
+<script src="engine.js"></script>
+<script>
+"use strict";
+
+const RANKS = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
+const rankVal = r => r === "A" ? 11 : (["J","Q","K","10"].includes(r) ? 10 : +r);
+const PER_RANK = 24;                      // 6 decks x 4 suits
+let myCards = [], upPick = null;
+let surrOn = true, h17 = false, hasResult = false;
+const dealt = {}; RANKS.forEach(r => dealt[r] = 0);
+
+const inPlay = r => myCards.filter(x => x === r).length + (upPick === r ? 1 : 0);
+const seenCount = () => RANKS.reduce((a,r) => a + dealt[r], 0);
+const shoeAdjusted = () => seenCount() > 0;
+
+/* ---------- card pickers ---------- */
+function buildRow(el, onClick){
+  RANKS.forEach(r => {
+    const b = document.createElement("button");
+    b.className = "rankbtn"; b.type = "button";
+    b.textContent = r; b.dataset.rank = r;
+    b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", () => onClick(r, b));
+    el.appendChild(b);
+  });
+}
+const cardRow = document.getElementById("pick-cards");
+const upRow = document.getElementById("pick-up");
+buildRow(cardRow, (r) => {
+  const count = myCards.filter(x => x === r).length;
+  if (count === 2) myCards.splice(myCards.indexOf(r), 1);
+  else if (myCards.length < 2) myCards.push(r);
+  else if (count === 1) myCards.splice(myCards.indexOf(r), 1);
+  else { myCards.shift(); myCards.push(r); }
+  syncPickers();
+});
+buildRow(upRow, (r) => { upPick = (upPick === r) ? null : r; syncPickers(); });
+
+const dealBtn = document.getElementById("deal");
+const hint = document.getElementById("deal-hint");
+function syncPickers(){
+  cardRow.querySelectorAll(".rankbtn").forEach(b => {
+    const n = myCards.filter(x => x === b.dataset.rank).length;
+    b.setAttribute("aria-pressed", n > 0 ? "true" : "false");
+    b.textContent = n === 2 ? b.dataset.rank + "\u00D72" : b.dataset.rank;
+  });
+  upRow.querySelectorAll(".rankbtn").forEach(b =>
+    b.setAttribute("aria-pressed", b.dataset.rank === upPick ? "true" : "false"));
+  const ready = myCards.length === 2 && upPick;
+  dealBtn.disabled = !ready;
+  hint.textContent = ready
+    ? "Your " + myCards.join(" + ") + " vs. dealer " + upPick + " \u2014 ready."
+    : (myCards.length < 2 ? "Pick " + (2 - myCards.length) + " more of your cards. " : "") +
+      (!upPick ? "Pick one dealer upcard." : "");
+  refreshShoe();
+}
+
+/* ---------- settings toggles ---------- */
+function wireSeg(id, onChange){
+  const el = document.getElementById(id);
+  el.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+    el.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    onChange(b.dataset.val);
+  }));
+}
+wireSeg("set-surr", v => { surrOn = (v === "yes"); rerun(); });
+wireSeg("set-h17", v => { h17 = (v === "h"); rerun(); });
+
+/* ---------- shoe composition panel ---------- */
+const panel = document.getElementById("shoe-panel");
+const shoeToggle = document.getElementById("shoe-toggle");
+shoeToggle.addEventListener("click", () => {
+  panel.hidden = !panel.hidden;
+  shoeToggle.setAttribute("aria-expanded", String(!panel.hidden));
+  shoeLabel();
+});
+function shoeLabel(){
+  const n = seenCount();
+  shoeToggle.textContent = "Shoe composition" + (n ? " (" + n + " seen)" : "") + (panel.hidden ? " \u25BE" : " \u25B4");
+}
+const grid = document.getElementById("shoe-grid");
+RANKS.forEach(r => {
+  const item = document.createElement("div");
+  item.className = "shoe-item";
+  item.innerHTML = '<span class="r">' + r + '</span>' +
+    '<button type="button" class="cbtn" data-d="-1" aria-label="one fewer ' + r + ' dealt">\u2212</button>' +
+    '<span class="cnt">0</span>' +
+    '<button type="button" class="cbtn" data-d="1" aria-label="one more ' + r + ' dealt">+</button>' +
+    '<span class="left"></span>';
+  item.querySelectorAll(".cbtn").forEach(b => b.addEventListener("click", () => {
+    const max = PER_RANK - inPlay(r);
+    dealt[r] = Math.min(max, Math.max(0, dealt[r] + (+b.dataset.d)));
+    refreshShoe(); rerun();
+  }));
+  item.dataset.rank = r;
+  grid.appendChild(item);
+});
+function refreshShoe(){
+  grid.querySelectorAll(".shoe-item").forEach(item => {
+    const r = item.dataset.rank;
+    const max = PER_RANK - inPlay(r);
+    if (dealt[r] > max) dealt[r] = max;
+    item.querySelector(".cnt").textContent = dealt[r];
+    item.querySelector(".left").textContent = (PER_RANK - dealt[r] - inPlay(r)) + " left";
+    item.querySelector('[data-d="1"]').disabled = dealt[r] >= max;
+    item.querySelector('[data-d="-1"]').disabled = dealt[r] <= 0;
+  });
+  shoeLabel();
+}
+document.getElementById("reset-shoe").addEventListener("click", () => {
+  RANKS.forEach(r => dealt[r] = 0);
+  refreshShoe(); rerun();
+});
+document.getElementById("reset-hand").addEventListener("click", () => {
+  myCards = []; upPick = null; hasResult = false;
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("result").innerHTML = "";
+  syncPickers();
+});
+
+/* ---------- probabilities from the current shoe ---------- */
+function shoeProbs(){
+  const byVal = {};
+  let total = 0;
+  RANKS.forEach(r => {
+    const left = Math.max(0, PER_RANK - dealt[r] - inPlay(r));
+    const v = rankVal(r);
+    byVal[v] = (byVal[v] || 0) + left;
+    total += left;
+  });
+  if (total <= 0) return null;
+  const probs = {};
+  for (const v in byVal) probs[v] = byVal[v] / total;
+  return probs;
+}
+
+/* ---------- analysis ---------- */
+function handName(v1, v2){
+  const isPair = v1 === v2;
+  const s = addCard(0,false,v1), s2 = addCard(s.t, s.soft, v2);
+  if (isPair) return {name: "Pair of " + (v1 === 11 ? "Aces" : v1 + "s"), t:s2.t, soft:s2.soft, pair:v1};
+  return {name: (s2.soft ? "Soft " : "Hard ") + s2.t, t:s2.t, soft:s2.soft, pair:0};
+}
+const outBar = a => {
+  const tot = a.w + a.p + a.l || 1;
+  return '<div class="outbar" aria-hidden="true">' +
+    '<span class="w" style="width:' + (100*a.w/tot) + '%"></span>' +
+    '<span class="p" style="width:' + (100*a.p/tot) + '%"></span>' +
+    '<span class="l" style="width:' + (100*a.l/tot) + '%"></span></div>';
+};
+function bustNext(t, soft, P){
+  let p = 0;
+  for (const v of VALS){ if (addCard(t, soft, v).t > 21) p += P(v); }
+  return p;
+}
+function explain(res, h, upV, eng){
+  const b = res.best, alts = res.acts.filter(a => a !== b);
+  const alt = alts.length ? alts.reduce((x,y) => y.ev > x.ev ? y : x) : b;
+  const dbust = (100 * eng.dealerBust).toFixed(0);
+  const mybust = (100 * bustNext(h.t, h.soft, eng.P)).toFixed(0);
+  const up = upLabel(upV);
+  if (b.name === "Stand")
+    return "Drawing to " + (h.soft ? "soft " : "") + h.t + " busts you " + mybust + "% of the time, while the dealer breaks on their own " + dbust + "% of the time from a " + up + ". Letting the dealer take the risk is worth more than taking it yourself.";
+  if (b.name === "Hit")
+    return mybust === "0"
+      ? "One more card can't bust this hand, and " + (h.soft ? "soft " : "") + h.t + " is too weak to stand on against a " + up + " \u2014 so drawing costs nothing and can only improve your position."
+      : "Standing on " + h.t + " mostly wins only when the dealer busts (" + dbust + "% from a " + up + "). Hitting risks busting " + mybust + "% of the time, but the hands it improves recover more than standing gives up.";
+  if (b.name === "Double")
+    return "Your hand is a favorite to finish strong with exactly one card, so it pays to put twice the money on this spot \u2014 even at the price of giving up any further hits.";
+  if (b.name === "Split")
+    return h.pair === 11
+      ? "Played as one hand this is a soft 12 \u2014 nearly worthless. But each ace is the best starting card in the game, so splitting turns one bad hand into two excellent ones."
+      : h.pair === 8
+        ? "Sixteen is the worst total in blackjack. Two hands starting from an 8 each lose less than one hand stuck on 16 \u2014 splitting here is damage control, not greed."
+        : "Played together these cards make " + h.t + ", a mediocre total against a " + up + ". Each " + (h.pair === 10 ? "ten" : h.pair) + " is a stronger start on its own, so two hands earn back more than the extra bet risks.";
+  return "Every way of playing this hand loses more than half a bet on average \u2014 the best alternative is " + alt.name.toLowerCase() + " at " + fmtEV(alt.ev) + ". Paying half to walk away is simply the cheapest exit.";
+}
+
+function ruleChips(){
+  const chips = [
+    h17 ? "dealer hits soft 17" : "dealer stands on soft 17",
+    surrOn ? "surrender allowed" : "no surrender",
+    shoeAdjusted() ? seenCount() + " cards marked dealt" : "full shoe"
+  ];
+  return '<div class="rulechips">' + chips.map(c => "<span>" + c + "</span>").join("") + "</div>";
+}
+
+function runAnalysis(){
+  if (!(myCards.length === 2 && upPick)) return;
+  const v1 = rankVal(myCards[0]), v2 = rankVal(myCards[1]);
+  const upV = rankVal(upPick);
+  const box = document.getElementById("result");
+  box.classList.add("show");
+  hasResult = true;
+
+  if ((v1 === 11 && v2 === 10) || (v1 === 10 && v2 === 11)){
+    box.innerHTML = '<div class="bj-banner"><b>Blackjack!</b>' +
+      "<p>" + myCards.join(" + ") + " is a natural 21. No decision to make \u2014 it pays 3:2 immediately. " +
+      "The only hand that doesn't lose to it is a dealer blackjack, which pushes.</p></div>" + ruleChips();
+    return;
+  }
+
+  const h = handName(v1, v2);
+  const eng = makeEngine(upV, {h17: h17, probs: shoeAdjusted() ? shoeProbs() : null});
+  const res = eng.analyze(h.t, h.soft, h.pair, surrOn);
+  const bp = res.bestPlayable;
+
+  const rows = res.acts.map(a => {
+    const isBest = a === res.best;
+    const stats = a.surr
+      ? "<b>" + fmtEV(a.ev) + "</b> EV \u00B7 lose half, always"
+      : "<b>" + fmtEV(a.ev) + "</b> EV \u00B7 win " + fmtPct(a.w) + (a.name === "Split" ? " / hand" : "");
+    return '<div class="actrow ' + (isBest ? "best" : "") + '">' +
+      '<div class="aname">' + a.name + "</div>" +
+      (a.surr ? '<div class="outbar" aria-hidden="true"><span class="l" style="width:100%;opacity:.45"></span></div>' : outBar(a)) +
+      '<div class="stats">' + stats + "</div></div>";
+  }).join("");
+
+  box.innerHTML =
+    '<div class="result-head">' +
+      '<span class="handname">' + h.name + "</span>" +
+      '<span class="vs">' + myCards.join(" + ") + " vs. dealer " + upPick + "</span>" +
+      '<span class="bigwin">win chance with best play <b>' + fmtPct(bp.w) + "</b></span>" +
+    "</div>" + ruleChips() +
+    '<div class="reco"><span class="medal">\u2605</span><div><b>' + res.best.name + "</b>" +
+      "<span> \u2014 the recommended play under these settings (" + fmtEV(res.best.ev) + " expected value per unit bet)</span>" +
+      '<p style="flex-basis:100%;margin-top:6px;font-size:.9rem;color:#D8DED6">' + explain(res, h, upV, eng) + "</p></div></div>" +
+    '<div class="actions">' + rows + "</div>" +
+    '<div class="legend">' +
+      '<span><i style="background:var(--good)"></i>win</span>' +
+      '<span><i style="background:var(--push)"></i>push</span>' +
+      '<span><i style="background:var(--bad)"></i>lose</span>' +
+      (h.pair ? "" : "<span style='margin-left:auto'>Split is only offered when your two cards match.</span>") +
+    "</div>";
+}
+function rerun(){ if (hasResult && myCards.length === 2 && upPick) runAnalysis(); }
+dealBtn.addEventListener("click", () => {
+  runAnalysis();
+  document.getElementById("result").scrollIntoView({behavior:"smooth", block:"nearest"});
+});
+syncPickers();
+</script>
+<script>
+document.querySelectorAll("ins.adsbygoogle:not([data-adsbygoogle-status])").forEach(ins => {
+  if (ins.closest(".ad-anchor") && window.innerWidth > 640) return;
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+});
+</script>
+</body>
+</html>
