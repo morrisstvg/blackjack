@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><link rel="icon" type="image/png" href="/favicon-32x32.png">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blackjack Basic Strategy Chart (6 Decks, S17) — Best Blackjack Hands</title>
+<title>Blackjack Basic Strategy Chart (6 Decks, S17) - Best Blackjack Hands</title>
 <meta name="description" content="Color-coded blackjack basic strategy chart for six decks, dealer stands on soft 17: hard totals, soft totals, pairs, and dealer bust odds by upcard.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230E2A20'/%3E%3Ctext x='50' y='74' font-size='66' text-anchor='middle' fill='%23C9A24B'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
      crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,14 +18,28 @@
 
 <nav class="nav" aria-label="Main">
   <div class="nav-inner">
-    <a class="wordmark" href="index.html"><span class="pip">♠</span>Best<span class="long"> Blackjack</span> Hands</a>
-    <a class="navlink" href="index.html" data-route="home">Overview</a>
-    <a class="navlink" href="rankings.html" data-route="rankings">Hand rankings</a>
-    <a class="navlink" href="analyzer.html" data-route="analyzer">Hand analyzer</a>
-    <a class="navlink" href="chart.html" data-route="chart" aria-current="page">Strategy chart</a>
-    <a class="navlink" href="rules.html" data-route="rules">How to play</a>
+    <a class="wordmark" href="index.html"><span class="pip">♠</span>Best Blackjack Hands</a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="navlinks" aria-label="Open menu">☰ Menu</button>
+    <div class="navlinks" id="navlinks">
+      <a class="navlink" href="index.html">Overview</a>
+      <a class="navlink" href="rankings.html">Hand rankings</a>
+      <a class="navlink" href="analyzer.html">Hand analyzer</a>
+      <a class="navlink" href="chart.html" aria-current="page">Strategy chart</a>
+      <a class="navlink" href="guides.html">Guides</a>
+      <a class="navlink" href="rules.html">How to play</a>
+      <a class="navlink" href="about.html">About</a>
+    </div>
   </div>
 </nav>
+<script>
+(function(){
+  var t = document.querySelector(".menu-toggle"), n = document.getElementById("navlinks");
+  if (t) t.addEventListener("click", function(){
+    var open = n.classList.toggle("open");
+    t.setAttribute("aria-expanded", String(open));
+  });
+})();
+</script>
 
 <!-- ============ STRATEGY CHART ============ -->
 <main id="view-chart" class="view">
@@ -32,11 +47,11 @@
   <h1>The whole game on one card</h1>
   <p class="lede">The mathematically best first action for every starting hand, generated live by the same engine behind the rankings and the analyzer. Find your hand in the left column, the dealer's upcard along the top.</p>
   <div class="chart-legend">
-    <span><i class="c-H"></i>H — Hit</span>
-    <span><i class="c-S"></i>S — Stand</span>
-    <span><i class="c-D"></i>D — Double</span>
-    <span><i class="c-P"></i>P — Split</span>
-    <span><i class="c-R"></i>R — Surrender</span>
+    <span><i class="c-H"></i>H - Hit</span>
+    <span><i class="c-S"></i>S - Stand</span>
+    <span><i class="c-D"></i>D - Double</span>
+    <span><i class="c-P"></i>P - Split</span>
+    <span><i class="c-R"></i>R - Surrender</span>
   </div>
   <h2>Hard totals</h2>
   <div class="chartwrap" id="chart-hard"></div>
@@ -47,23 +62,33 @@
   <div class="chartwrap" id="chart-pairs"></div>
   <p class="hero-note" style="text-align:left">The two rules worth memorizing first: always split aces and 8s; never split 10s or 5s.</p>
   <h2>How often does the dealer bust?</h2>
-  <p class="lede" style="font-size:.95rem">The chart above makes more sense with this table in mind — you stand on weak totals against 4, 5 and 6 precisely because the dealer breaks most often from those cards.</p>
+  <p class="lede" style="font-size:.95rem">The chart above makes more sense with this table in mind - you stand on weak totals against 4, 5 and 6 precisely because the dealer breaks most often from those cards.</p>
   <div class="chartwrap" id="chart-bust"></div>
-  <!-- AD SLOT: replace 8707937416295070 with your AdSense unit ID. -->
-  <div class="ad-slot"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot=8707937416295070 data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+  
+  <div class="rules" style="max-width:760px">
+    <h2>How to memorize the chart</h2>
+    <p>Nobody learns this grid cell by cell. Learn it in layers, and each layer is small.</p>
+    <p>Start with the four absolutes: always split aces and 8s, never split 10s or 5s, always stand on hard 17 or more, always hit hard 8 or less. Next, learn the stiff-hand rule that covers most of the hard section: with hard 12 through 16, stand when the dealer shows 2 through 6 and hit when the dealer shows 7 or higher, with one exception (hit 12 against a 2 or 3). Then add the doubles: 11 doubles against everything but an Ace, 10 doubles against 2 through 9, and 9 doubles against 3 through 6. That handles the vast majority of hands you will actually be dealt.</p>
+    <p>The soft totals and remaining pairs come last, and the analyzer is the fastest teacher there: deal yourself the hand, read the numbers, and the logic sticks better than memorization ever does.</p>
+    <h2>Why the chart looks the way it does</h2>
+    <p>Notice the cliff between the dealer's 6 and 7. To the left the chart is full of stands, doubles and splits; to the right it turns into hits. That line is the dealer bust table made visible. Against 2 through 6 the dealer must draw from a breakable total, so you avoid busting first and press bets while the risk is on the house. Against 7 and up the dealer usually finishes with a made hand, so you must improve your own total even at the risk of breaking.</p>
+  </div>
+
+  <!-- AD SLOT: replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
+  <div class="ad-slot"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
 </main>
 
 
 <footer>
   <p><strong>Methodology &amp; sources:</strong> all probabilities and expected values are computed live by an exact expected-value engine (infinite-deck model, a standard close approximation of a 6-deck shoe) under the rules shown on the front page: dealer stands on soft 17, double on any two cards including after splits, split aces receive one card, no resplits, late surrender available, blackjack pays 3:2, values conditioned on the dealer not holding a natural. Results agree with standard published expected-value references for these rules, such as the Wizard of Odds infinite-deck expected value tables and Griffin's <em>The Theory of Blackjack</em>. Because every page queries the same engine, the numbers always agree with each other.</p>
-  <p style="margin-top:10px">For education and entertainment only — blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
+  <p style="margin-top:10px">For education and entertainment only - blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
   <p style="margin-top:10px">Last updated: July 24, 2026 · <a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of use</a></p>
 </footer>
 
-<!-- AD SLOT (mobile anchor): shown only ≤640px wide. Replace 8707937416295070 with your AdSense unit ID. -->
+<!-- AD SLOT (mobile anchor): shown only ≤640px wide. Replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
 <div class="ad-anchor" id="ad-anchor">
   <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">×</button>
-  <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot=8707937416295070 data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
 </div>
 <script>document.body.classList.add("has-anchor");</script>
 <script src="engine.js"></script>

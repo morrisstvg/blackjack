@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why the Dealer's Upcard Matters More Than Your Hand | Best Blackjack Hands</title>
+<meta name="description" content="The dealer's upcard fixes the odds of every blackjack decision. How bust rates by upcard split the game into two strategies and drive the whole chart.">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
+     crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a class="wordmark" href="index.html"><span class="pip">♠</span>Best Blackjack Hands</a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="navlinks" aria-label="Open menu">☰ Menu</button>
+    <div class="navlinks" id="navlinks">
+      <a class="navlink" href="index.html">Overview</a>
+      <a class="navlink" href="rankings.html">Hand rankings</a>
+      <a class="navlink" href="analyzer.html">Hand analyzer</a>
+      <a class="navlink" href="chart.html">Strategy chart</a>
+      <a class="navlink" href="guides.html" aria-current="page">Guides</a>
+      <a class="navlink" href="rules.html">How to play</a>
+      <a class="navlink" href="about.html">About</a>
+    </div>
+  </div>
+</nav>
+<script>
+(function(){
+  var t = document.querySelector(".menu-toggle"), n = document.getElementById("navlinks");
+  if (t) t.addEventListener("click", function(){
+    var open = n.classList.toggle("open");
+    t.setAttribute("aria-expanded", String(open));
+  });
+})();
+</script>
+
+<main class="view">
+  <div class="rules">
+    <div class="eyebrow">Guide</div>
+    <h1>Why the dealer's upcard matters more than your hand</h1>
+    <p class="lede">The dealer has no decisions, so one visible card tells you how the round is likely to end. Most of basic strategy is just the correct response to that information.</p>
+
+    <h2>The information asymmetry at the heart of the game</h2>
+    <p>You see both of your cards and one of the dealer's. That visible dealer card is worth more to your decision than either of your own, because the dealer has no choices: from any upcard, the distribution of final dealer hands is completely fixed by the drawing rules. Your 14 is just a 14. But a dealer 5 is a precise, calculable promise about how the round will end.</p>
+    <h2>Weak cards and strong cards</h2>
+    <p>From a 5 or 6, the dealer busts more than 40% of the time. The reason is mechanical: those upcards usually lead through a stiff total of 12 to 16, which the dealer is forced to draw from, and a large share of the deck breaks a stiff. From a 10 or Ace the picture inverts. The most likely hole card is a ten, the dealer starts near a made hand, and the bust rate drops to roughly a quarter or less. The full numbers are in the bust table at the bottom of the <a href="chart.html">strategy chart</a>.</p>
+    <p>This is why the same player hand plays completely differently across the dealer row of any strategy table. Hard 13 stands against a 6 and hits against a 10 not because 13 changed, but because the thing it is fighting changed.</p>
+    <h2>Two strategies, not twenty</h2>
+    <p>Once you see the upcard as the driver, basic strategy collapses into two postures. Against 2 through 6, play defense with weak hands and offense with money: never bust a stiff when the dealer might bust for you, and press doubles and splits because a dealer in trouble is the moment extra bets earn. Against 7 through Ace, assume the dealer will finish with a real hand, which means your stiff totals must draw and your marginal doubles and splits mostly disappear.</p>
+    <h2>The "assume a ten" heuristic and its limits</h2>
+    <p>Players are often taught to imagine the hole card is a ten. As a first approximation it works: tens are the most common card value, and the habit correctly frames a dealer 6 as "probably 16, probably busting" and a dealer 10 as "probably 20, beat it or lose". But it fails at the edges, because strategy is computed against the full distribution of hole cards, not the single most likely one. Twelve against a 4 stands even though "dealer has 14" suggests no urgency. Sixteen against a 7 hits even though "dealer has 17" makes 16 look close enough. Use the heuristic to remember the shape of the chart, and the <a href="analyzer.html">analyzer</a> when you want the real number.</p>
+    <h2>The peek</h2>
+    <p>One more upcard detail changes the arithmetic quietly. When the dealer shows an Ace or a ten, the hand pauses while the dealer checks for blackjack. Every strategy number on this site is computed after that check has come back negative, which is exactly the situation in which you actually make decisions. It is also why an Ace remains dangerous even after the peek: the dealer definitely does not have 21, but still finishes strong more often than any small card.</p>
+
+    <div class="related">
+      <h2>Keep going</h2>
+      <ul>
+      <li><a href="chart.html">Dealer bust odds by upcard</a></li>
+      <li><a href="guide-house-edge.html">The house edge: where the casino's profit comes from</a></li>
+      <li><a href="rankings.html">Every hand against every upcard, ranked</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- AD SLOT: replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
+  <div class="ad-slot"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+</main>
+
+<footer>
+  <p><strong>Methodology &amp; sources:</strong> all probabilities and expected values are computed live by an exact expected-value engine (infinite-deck model, a standard close approximation of a 6-deck shoe) under the rules shown on the front page: dealer stands on soft 17, double on any two cards including after splits, split aces receive one card, no resplits, late surrender available, blackjack pays 3:2, values conditioned on the dealer not holding a natural. Results agree with standard published expected-value references for these rules, such as the Wizard of Odds infinite-deck expected value tables and Griffin's <em>The Theory of Blackjack</em>. Because every page queries the same engine, the numbers always agree with each other.</p>
+  <p style="margin-top:10px">For education and entertainment only - blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
+  <p style="margin-top:10px">Last updated: July 24, 2026 · <a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of use</a></p>
+</footer>
+<!-- AD SLOT (mobile anchor): shown only ≤640px wide. Replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
+<div class="ad-anchor" id="ad-anchor">
+  <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">×</button>
+  <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>document.body.classList.add("has-anchor");</script>
+<script>
+document.querySelectorAll("ins.adsbygoogle:not([data-adsbygoogle-status])").forEach(ins => {
+  if (ins.closest(".ad-anchor") && window.innerWidth > 640) return;
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+});
+</script>
+</body>
+</html>

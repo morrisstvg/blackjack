@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Blackjack House Edge Explained | Best Blackjack Hands</title>
+<meta name="description" content="Where the casino's blackjack profit comes from: the double-bust asymmetry, what 3:2 payouts refund, how each rule change reprices the game, and what the edge costs per hour.">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
+     crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a class="wordmark" href="index.html"><span class="pip">♠</span>Best Blackjack Hands</a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="navlinks" aria-label="Open menu">☰ Menu</button>
+    <div class="navlinks" id="navlinks">
+      <a class="navlink" href="index.html">Overview</a>
+      <a class="navlink" href="rankings.html">Hand rankings</a>
+      <a class="navlink" href="analyzer.html">Hand analyzer</a>
+      <a class="navlink" href="chart.html">Strategy chart</a>
+      <a class="navlink" href="guides.html" aria-current="page">Guides</a>
+      <a class="navlink" href="rules.html">How to play</a>
+      <a class="navlink" href="about.html">About</a>
+    </div>
+  </div>
+</nav>
+<script>
+(function(){
+  var t = document.querySelector(".menu-toggle"), n = document.getElementById("navlinks");
+  if (t) t.addEventListener("click", function(){
+    var open = n.classList.toggle("open");
+    t.setAttribute("aria-expanded", String(open));
+  });
+})();
+</script>
+
+<main class="view">
+  <div class="rules">
+    <div class="eyebrow">Guide</div>
+    <h1>The house edge: where the casino's profit comes from</h1>
+    <p class="lede">One rule generates the casino's entire profit at blackjack, and most of the other rules are partial refunds. Understanding the ledger tells you which tables to avoid.</p>
+
+    <h2>The asymmetry that pays for the casino</h2>
+    <p>Blackjack looks symmetrical: you and the dealer draw cards toward 21 under similar pressures. The profit hides in the order of play. You act first, and if you bust, you lose immediately, even if the dealer goes on to bust the same round. Both sides break roughly as often as each other over time, but only one side pays for it on the spot. That double-bust rule is essentially the entire house edge. Everything else in the rules is compensation flowing back toward you.</p>
+    <h2>What you get in return</h2>
+    <p>The 3:2 blackjack payout is the largest refund: you and the dealer are dealt naturals equally often, but only yours pays a premium. Doubling and splitting are the second: the dealer can never raise the stakes, and every double or split the chart recommends is a spot where the extra money has positive expectation. Late surrender returns a final sliver by capping your worst hands at half a loss. Add the refunds up against the double-bust cost and, under the rules on this site, about half a percent of disadvantage remains for a perfect player. Fifty cents per hundred wagered is among the smallest edges in the casino.</p>
+    <h2>How rules move the number</h2>
+    <p>Every rule variation is a repricing of that half percent. A table that pays blackjack 6:5 instead of 3:2 takes back about 1.4% all by itself, roughly quadrupling the edge; it is the single most expensive sign on a casino floor. The dealer hitting soft 17 costs you about 0.2%, which you can watch reshape the recommendations by flipping the setting in the <a href="analyzer.html">analyzer</a>. Removing doubling after splits costs about 0.14%, removing surrender about 0.08%, and moving from six decks toward one refunds up to about half a percent. Reading the placard before sitting down is worth more than memorizing the last ten cells of the chart.</p>
+    <h2>The edge you choose yourself</h2>
+    <p>All of the numbers above assume perfect basic strategy. Casual play, guessing at stiffs, skipping doubles, standing on soft 17, typically hands over 2 to 4%. The gap between those figures is the practical point of this entire site: rule selection and correct play together decide whether an evening costs you a coffee or a dinner.</p>
+    <h2>What half a percent means in money</h2>
+    <p>Expected loss is edge times total money wagered, and the wagering adds up faster than intuition suggests. At around 60 hands per hour betting 10 units, a perfect player at a 3:2 table expects to lose about 3 units per hour; the same player at a 6:5 table about 12; a casual player at that 6:5 table around 20 or more. Any single session can land anywhere, because variance in blackjack dwarfs the edge. The edge is simply the average all those sessions drift toward, and no play, bet pattern or hunch moves it. Only rules and strategy do.</p>
+
+    <div class="related">
+      <h2>Keep going</h2>
+      <ul>
+      <li><a href="guide-myths.html">Blackjack myths the math disagrees with</a></li>
+      <li><a href="guide-dealer-upcard.html">Why the dealer's upcard matters more than your hand</a></li>
+      <li><a href="rules.html">Common beginner mistakes</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- AD SLOT: replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
+  <div class="ad-slot"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+</main>
+
+<footer>
+  <p><strong>Methodology &amp; sources:</strong> all probabilities and expected values are computed live by an exact expected-value engine (infinite-deck model, a standard close approximation of a 6-deck shoe) under the rules shown on the front page: dealer stands on soft 17, double on any two cards including after splits, split aces receive one card, no resplits, late surrender available, blackjack pays 3:2, values conditioned on the dealer not holding a natural. Results agree with standard published expected-value references for these rules, such as the Wizard of Odds infinite-deck expected value tables and Griffin's <em>The Theory of Blackjack</em>. Because every page queries the same engine, the numbers always agree with each other.</p>
+  <p style="margin-top:10px">For education and entertainment only - blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
+  <p style="margin-top:10px">Last updated: July 24, 2026 · <a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of use</a></p>
+</footer>
+<!-- AD SLOT (mobile anchor): shown only ≤640px wide. Replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
+<div class="ad-anchor" id="ad-anchor">
+  <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">×</button>
+  <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>document.body.classList.add("has-anchor");</script>
+<script>
+document.querySelectorAll("ins.adsbygoogle:not([data-adsbygoogle-status])").forEach(ins => {
+  if (ins.closest(".ad-anchor") && window.innerWidth > 640) return;
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+});
+</script>
+</body>
+</html>

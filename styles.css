@@ -36,31 +36,46 @@ button{font-family:inherit}
 /* ---------- Nav ---------- */
 .nav{
   position:sticky;top:0;z-index:50;
-  background:rgba(8,27,20,.92);
+  background:rgba(8,27,20,.94);
   backdrop-filter:blur(8px);
   border-bottom:1px solid var(--felt-line);
 }
 .nav-inner{
   max-width:var(--maxw);margin:0 auto;padding:0 20px;
-  display:flex;align-items:center;gap:6px;height:60px;
+  display:flex;align-items:center;gap:6px;height:76px;position:relative;
 }
 .wordmark{
-  font-family:"Fraunces",serif;font-weight:700;font-size:1.15rem;
+  font-family:"Fraunces",serif;font-weight:700;font-size:1.3rem;
   letter-spacing:.01em;text-decoration:none;margin-right:auto;
-  display:flex;align-items:baseline;gap:8px;white-space:nowrap;
+  display:flex;align-items:baseline;gap:9px;white-space:nowrap;
 }
-.wordmark .pip{color:var(--gilt);font-size:1rem}
+.wordmark .pip{color:var(--gilt);font-size:1.1rem}
+.navlinks{display:flex;align-items:center;gap:4px}
 .nav a.navlink{
   text-decoration:none;color:var(--mist);
-  font-size:.85rem;font-weight:500;letter-spacing:.03em;
-  padding:7px 12px;border-radius:6px;
+  font-size:.9rem;font-weight:500;letter-spacing:.02em;
+  padding:9px 13px;border-radius:6px;
 }
 .nav a.navlink:hover{color:var(--stock)}
 .nav a.navlink[aria-current="page"]{color:var(--felt-deep);background:var(--gilt)}
-@media(max-width:640px){
-  .nav-inner{padding:0 12px;height:54px}
-  .wordmark span.long{display:none}
-  .nav a.navlink{padding:6px 8px;font-size:.78rem}
+.menu-toggle{
+  display:none;background:transparent;border:1px solid var(--felt-line);
+  color:var(--stock);border-radius:8px;padding:10px 14px;font-size:1.05rem;
+  line-height:1;cursor:pointer;
+}
+.menu-toggle:hover{border-color:var(--gilt);color:var(--gilt)}
+@media(max-width:960px){
+  .nav-inner{height:66px;padding:0 14px}
+  .wordmark{font-size:1.1rem}
+  .menu-toggle{display:block}
+  .navlinks{
+    display:none;position:absolute;top:100%;left:0;right:0;
+    flex-direction:column;align-items:stretch;gap:2px;
+    background:var(--felt-deep);border-bottom:1px solid var(--felt-line);
+    padding:10px 14px 16px;box-shadow:0 14px 28px rgba(0,0,0,.45);
+  }
+  .navlinks.open{display:flex}
+  .nav a.navlink{font-size:1rem;padding:13px 12px}
 }
 
 /* ---------- Views ---------- */
@@ -348,3 +363,17 @@ footer{
 .shoe-item .left{font-size:.66rem;color:var(--mist-dim);font-family:"Spline Sans Mono",monospace;margin-left:auto}
 .rulechips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
 .rulechips span{font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1px solid var(--felt-line);color:var(--mist)}
+
+/* ---------- Guides ---------- */
+.guidelist{display:grid;gap:14px;max-width:760px;margin-top:30px}
+.guideitem{
+  display:block;text-decoration:none;padding:20px 22px;
+  border:1px solid var(--felt-line);border-radius:var(--radius);background:rgba(0,0,0,.16);
+  transition:border-color .15s ease, transform .15s ease;
+}
+.guideitem:hover{border-color:var(--gilt);transform:translateX(4px)}
+.guideitem h3{font-family:"Fraunces",serif;font-size:1.2rem;font-weight:600;color:var(--stock);margin-bottom:6px}
+.guideitem p{font-size:.88rem;color:var(--mist);line-height:1.5;margin-bottom:8px}
+.guideitem .go{font-family:"Spline Sans Mono",monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gilt)}
+.related{margin-top:44px;padding-top:18px;border-top:1px solid var(--felt-line)}
+.related h2{margin-top:0}

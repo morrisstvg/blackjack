@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><link rel="icon" type="image/png" href="/favicon-32x32.png">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blackjack Hand Analyzer: the Best Play for Any Hand — Best Blackjack Hands</title>
-<meta name="description" content="Enter your two cards and the dealer's upcard to see the exact expected value of hitting, standing, doubling, splitting or surrendering — and why one play is best.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230E2A20'/%3E%3Ctext x='50' y='74' font-size='66' text-anchor='middle' fill='%23C9A24B'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+<title>Blackjack Hand Analyzer: the Best Play for Any Hand - Best Blackjack Hands</title>
+<meta name="description" content="Enter your two cards and the dealer's upcard to see the exact expected value of hitting, standing, doubling, splitting or surrendering - and why one play is best.">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
      crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,14 +18,28 @@
 
 <nav class="nav" aria-label="Main">
   <div class="nav-inner">
-    <a class="wordmark" href="index.html"><span class="pip">♠</span>Best<span class="long"> Blackjack</span> Hands</a>
-    <a class="navlink" href="index.html" data-route="home">Overview</a>
-    <a class="navlink" href="rankings.html" data-route="rankings">Hand rankings</a>
-    <a class="navlink" href="analyzer.html" data-route="analyzer" aria-current="page">Hand analyzer</a>
-    <a class="navlink" href="chart.html" data-route="chart">Strategy chart</a>
-    <a class="navlink" href="rules.html" data-route="rules">How to play</a>
+    <a class="wordmark" href="index.html"><span class="pip">♠</span>Best Blackjack Hands</a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="navlinks" aria-label="Open menu">☰ Menu</button>
+    <div class="navlinks" id="navlinks">
+      <a class="navlink" href="index.html">Overview</a>
+      <a class="navlink" href="rankings.html">Hand rankings</a>
+      <a class="navlink" href="analyzer.html" aria-current="page">Hand analyzer</a>
+      <a class="navlink" href="chart.html">Strategy chart</a>
+      <a class="navlink" href="guides.html">Guides</a>
+      <a class="navlink" href="rules.html">How to play</a>
+      <a class="navlink" href="about.html">About</a>
+    </div>
   </div>
 </nav>
+<script>
+(function(){
+  var t = document.querySelector(".menu-toggle"), n = document.getElementById("navlinks");
+  if (t) t.addEventListener("click", function(){
+    var open = n.classList.toggle("open");
+    t.setAttribute("aria-expanded", String(open));
+  });
+})();
+</script>
 
 <!-- ============ ANALYZER ============ -->
 <main id="view-analyzer" class="view">
@@ -63,7 +78,7 @@
       <h3>Cards already dealt from the shoe</h3>
       <button class="ghostbtn" id="reset-shoe">Reset shoe</button>
     </div>
-    <p class="shoe-note">Mark cards you've seen leave the shoe — other players' hands, the dealer's earlier rounds. Your own two cards and the dealer's upcard are removed automatically. Six decks means 24 of each rank. With nothing marked, this page uses the same full-shoe model as the rest of the site; with cards marked, all odds are recomputed from the remaining shoe's frequencies.</p>
+    <p class="shoe-note">Mark cards you've seen leave the shoe - other players' hands, the dealer's earlier rounds. Your own two cards and the dealer's upcard are removed automatically. Six decks means 24 of each rank. With nothing marked, this page uses the same full-shoe model as the rest of the site; with cards marked, all odds are recomputed from the remaining shoe's frequencies.</p>
     <div class="shoe-grid" id="shoe-grid"></div>
   </div>
 
@@ -73,6 +88,14 @@
   </div>
 
   <section class="result" id="result" aria-live="polite"></section>
+  
+  <div class="rules" style="max-width:760px">
+    <h2>Three hands worth trying</h2>
+    <p><strong>12 against a dealer 3.</strong> Most players stand on any 12 against a small card. The numbers show this one is a genuine coin flip: hitting and standing are separated by about one hundredth of a bet, and hitting comes out ahead. Only a 10 busts you, and 12 wins almost nothing by standing unless the dealer breaks.</p>
+    <p><strong>Ace,7 against a dealer 9.</strong> Soft 18 feels like a made hand, and standing on it against a strong upcard is one of the most common mistakes in the game. Deal it in the analyzer and you will see that 18 simply loses to the 19s the dealer makes from a 9, while hitting a hand that cannot bust recovers enough value to be clearly better.</p>
+    <p><strong>9,9 against a dealer 7.</strong> The pair chart says split 9s against 2 through 6 and against 8 and 9, but stand against a 7. The reason appears in the numbers: your 18 beats the 17 the dealer most often makes from a 7, so the hand is already a winner and splitting it only puts more money on a weaker position.</p>
+  </div>
+
   <!-- AD SLOT: replace inner placeholder with your ad network code. Recommended: 336x280 or 300x250 rectangle. -->
   <div class="ad-slot rect"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
 </main>
@@ -80,7 +103,7 @@
 
 <footer>
   <p><strong>Methodology &amp; sources:</strong> all probabilities and expected values are computed live by an exact expected-value engine (infinite-deck model, a standard close approximation of a 6-deck shoe) under the rules shown on the front page: dealer stands on soft 17, double on any two cards including after splits, split aces receive one card, no resplits, late surrender available, blackjack pays 3:2, values conditioned on the dealer not holding a natural. Results agree with standard published expected-value references for these rules, such as the Wizard of Odds infinite-deck expected value tables and Griffin's <em>The Theory of Blackjack</em>. Because every page queries the same engine, the numbers always agree with each other.</p>
-  <p style="margin-top:10px">For education and entertainment only — blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
+  <p style="margin-top:10px">For education and entertainment only - blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
   <p style="margin-top:10px">Last updated: July 24, 2026 · <a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of use</a></p>
 </footer>
 
@@ -141,7 +164,7 @@ function syncPickers(){
   const ready = myCards.length === 2 && upPick;
   dealBtn.disabled = !ready;
   hint.textContent = ready
-    ? "Your " + myCards.join(" + ") + " vs. dealer " + upPick + " \u2014 ready."
+    ? "Your " + myCards.join(" + ") + " vs. dealer " + upPick + " - ready."
     : (myCards.length < 2 ? "Pick " + (2 - myCards.length) + " more of your cards. " : "") +
       (!upPick ? "Pick one dealer upcard." : "");
   refreshShoe();
@@ -255,17 +278,17 @@ function explain(res, h, upV, eng){
     return "Drawing to " + (h.soft ? "soft " : "") + h.t + " busts you " + mybust + "% of the time, while the dealer breaks on their own " + dbust + "% of the time from a " + up + ". Letting the dealer take the risk is worth more than taking it yourself.";
   if (b.name === "Hit")
     return mybust === "0"
-      ? "One more card can't bust this hand, and " + (h.soft ? "soft " : "") + h.t + " is too weak to stand on against a " + up + " \u2014 so drawing costs nothing and can only improve your position."
+      ? "One more card can't bust this hand, and " + (h.soft ? "soft " : "") + h.t + " is too weak to stand on against a " + up + " - so drawing costs nothing and can only improve your position."
       : "Standing on " + h.t + " mostly wins only when the dealer busts (" + dbust + "% from a " + up + "). Hitting risks busting " + mybust + "% of the time, but the hands it improves recover more than standing gives up.";
   if (b.name === "Double")
-    return "Your hand is a favorite to finish strong with exactly one card, so it pays to put twice the money on this spot \u2014 even at the price of giving up any further hits.";
+    return "Your hand is a favorite to finish strong with exactly one card, so it pays to put twice the money on this spot - even at the price of giving up any further hits.";
   if (b.name === "Split")
     return h.pair === 11
-      ? "Played as one hand this is a soft 12 \u2014 nearly worthless. But each ace is the best starting card in the game, so splitting turns one bad hand into two excellent ones."
+      ? "Played as one hand this is a soft 12 - nearly worthless. But each ace is the best starting card in the game, so splitting turns one bad hand into two excellent ones."
       : h.pair === 8
-        ? "Sixteen is the worst total in blackjack. Two hands starting from an 8 each lose less than one hand stuck on 16 \u2014 splitting here is damage control, not greed."
+        ? "Sixteen is the worst total in blackjack. Two hands starting from an 8 each lose less than one hand stuck on 16 - splitting here is damage control, not greed."
         : "Played together these cards make " + h.t + ", a mediocre total against a " + up + ". Each " + (h.pair === 10 ? "ten" : h.pair) + " is a stronger start on its own, so two hands earn back more than the extra bet risks.";
-  return "Every way of playing this hand loses more than half a bet on average \u2014 the best alternative is " + alt.name.toLowerCase() + " at " + fmtEV(alt.ev) + ". Paying half to walk away is simply the cheapest exit.";
+  return "Every way of playing this hand loses more than half a bet on average - the best alternative is " + alt.name.toLowerCase() + " at " + fmtEV(alt.ev) + ". Paying half to walk away is simply the cheapest exit.";
 }
 
 function ruleChips(){
@@ -287,7 +310,7 @@ function runAnalysis(){
 
   if ((v1 === 11 && v2 === 10) || (v1 === 10 && v2 === 11)){
     box.innerHTML = '<div class="bj-banner"><b>Blackjack!</b>' +
-      "<p>" + myCards.join(" + ") + " is a natural 21. No decision to make \u2014 it pays 3:2 immediately. " +
+      "<p>" + myCards.join(" + ") + " is a natural 21. No decision to make - it pays 3:2 immediately. " +
       "The only hand that doesn't lose to it is a dealer blackjack, which pushes.</p></div>" + ruleChips();
     return;
   }
@@ -315,7 +338,7 @@ function runAnalysis(){
       '<span class="bigwin">win chance with best play <b>' + fmtPct(bp.w) + "</b></span>" +
     "</div>" + ruleChips() +
     '<div class="reco"><span class="medal">\u2605</span><div><b>' + res.best.name + "</b>" +
-      "<span> \u2014 the recommended play under these settings (" + fmtEV(res.best.ev) + " expected value per unit bet)</span>" +
+      "<span> - the recommended play under these settings (" + fmtEV(res.best.ev) + " expected value per unit bet)</span>" +
       '<p style="flex-basis:100%;margin-top:6px;font-size:.9rem;color:#D8DED6">' + explain(res, h, upV, eng) + "</p></div></div>" +
     '<div class="actions">' + rows + "</div>" +
     '<div class="legend">' +

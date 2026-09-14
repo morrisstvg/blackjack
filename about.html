@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Best Blackjack Hands - Odds, Strategy Chart & Hand Analyzer</title>
-<meta name="description" content="Exact blackjack odds for every starting hand: rankings by win probability, a hand analyzer with the recommended play, a basic strategy chart, and beginner rules.">
+<title>About | Best Blackjack Hands</title>
+<meta name="description" content="What Best Blackjack Hands is, how its blackjack probabilities are computed, and who runs it.">
 <link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
@@ -21,13 +21,13 @@
     <a class="wordmark" href="index.html"><span class="pip">♠</span>Best Blackjack Hands</a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="navlinks" aria-label="Open menu">☰ Menu</button>
     <div class="navlinks" id="navlinks">
-      <a class="navlink" href="index.html" aria-current="page">Overview</a>
+      <a class="navlink" href="index.html">Overview</a>
       <a class="navlink" href="rankings.html">Hand rankings</a>
       <a class="navlink" href="analyzer.html">Hand analyzer</a>
       <a class="navlink" href="chart.html">Strategy chart</a>
       <a class="navlink" href="guides.html">Guides</a>
       <a class="navlink" href="rules.html">How to play</a>
-      <a class="navlink" href="about.html">About</a>
+      <a class="navlink" href="about.html" aria-current="page">About</a>
     </div>
   </div>
 </nav>
@@ -41,78 +41,35 @@
 })();
 </script>
 
-<!-- ============ HOME ============ -->
-<main id="view-home" class="view">
-  <div class="hero">
-    <div class="eyebrow">A statistics reference for Blackjack</div>
-    <h1>Every hand has a number.<br>Here they all are.</h1>
-    <p class="lede">Exact expected values and win probabilities for every starting hand against every dealer upcard, computed from the same model on every page - no folklore, no hunches.</p>
-    <div class="assumptions" role="note" aria-label="Table rules assumed throughout">
-      <span><b>6 decks</b></span><span>dealer <b>stands</b> on soft 17</span><span>blackjack pays <b>3 : 2</b></span><span>double on <b>any two</b> cards</span><span>split &amp; late surrender <b>allowed</b></span>
-    </div>
-    <div class="cardgrid">
-      <a class="pcard" href="rankings.html">
-        <div class="index">Q<small>♠</small></div>
-        <div class="body">
-          <h3>Hand rankings</h3>
-          <p>All 340 starting-hand vs. upcard combinations, ranked by win probability under perfect basic strategy. Sort and filter freely.</p>
-        </div>
-        <div class="go">Browse the table →</div>
-        <div class="index flip">Q<small>♠</small></div>
-      </a>
-      <a class="pcard red" href="analyzer.html">
-        <div class="index">A<small>♥</small></div>
-        <div class="body">
-          <h3>Hand analyzer</h3>
-          <p>Pick your two cards and the dealer's upcard. See the value of every legal action - and why one play beats the rest.</p>
-        </div>
-        <div class="go">Analyze a hand →</div>
-        <div class="index flip">A<small>♥</small></div>
-      </a>
-      <a class="pcard red" href="chart.html">
-        <div class="index">K<small>♦</small></div>
-        <div class="body">
-          <h3>Strategy chart</h3>
-          <p>The classic color-coded chart: the best first move for every hand at a glance, plus dealer bust odds by upcard.</p>
-        </div>
-        <div class="go">See the chart →</div>
-        <div class="index flip">K<small>♦</small></div>
-      </a>
-      <a class="pcard" href="rules.html">
-        <div class="index">J<small>♣</small></div>
-        <div class="body">
-          <h3>How to play</h3>
-          <p>Card values, the flow of a round, every action, payouts, insurance, side bets, slang and FAQ - written for a first-timer.</p>
-        </div>
-        <div class="go">Learn the game →</div>
-        <div class="index flip">J<small>♣</small></div>
-      </a>
-    </div>
-    <div class="stats">
-      <div><b>340</b><span>hand × upcard combos</span></div>
-      <div><b>5</b><span>actions compared per hand</span></div>
-      <div><b>≈0.5%</b><span>house edge, perfect play</span></div>
-    </div>
-    <p class="hero-note">All figures on this site come from one expected-value engine, so every page always agrees.</p>
-    <!-- AD SLOT: replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
-    <div class="ad-slot"><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+<main class="view">
+  <div class="rules">
+    <div class="eyebrow">About</div>
+    <h1>About this site</h1>
+    <p class="lede">Best Blackjack Hands exists to answer one question precisely: for any blackjack hand, against any dealer card, what is the best play and by how much?</p>
+    <h2>What it is</h2>
+    <p>The site is a statistics reference for the card game blackjack, built around three tools: a <a href="rankings.html">ranking of all 340 starting situations</a> by win probability, a <a href="analyzer.html">hand analyzer</a> that computes the value of every legal action for any hand, and a <a href="chart.html">basic strategy chart</a> generated from the same calculations. Around the tools sit written <a href="guides.html">guides</a> and a complete <a href="rules.html">beginner's rulebook</a>.</p>
+    <h2>How the numbers are computed</h2>
+    <p>Nothing on this site is copied from a strategy card. Every probability and expected value is calculated live in your browser by an expected-value engine that models the dealer's forced drawing rules and searches the player's options for the highest-value line. The default model assumes six decks, dealer standing on soft 17, blackjack paying 3:2, doubling on any two cards including after splits, and late surrender, with all values conditioned on the dealer not holding a natural. The analyzer additionally lets you switch the dealer to hitting soft 17, disallow surrender, and adjust the composition of the shoe. Results agree with standard published references for these rules, and because every page queries the same engine, the site never disagrees with itself.</p>
+    <h2>What it is not</h2>
+    <p>The site offers no gambling, accepts no wagers, takes no money from and gives no money to any casino, and does not claim blackjack can be beaten. It cannot, outside of advantage-play conditions that are impractical for nearly everyone. Played perfectly under good rules, blackjack loses slowly; that is the best available outcome, and this site exists to help people reach it or to enjoy the mathematics for its own sake.</p>
+    <h2>Who runs it</h2>
+    <p>Best Blackjack Hands is an independent one-person project, built and maintained by its owner. It is supported by advertising. Questions, corrections and suggestions are welcome at <strong>[your-email@example.com]</strong>.</p>
+    <h2>Play responsibly</h2>
+    <p>Blackjack is entertainment with a price attached. If gambling stops being entertainment for you, free and confidential help exists in most countries, and using it is the correct play.</p>
   </div>
 </main>
-
 
 <footer>
   <p><strong>Methodology &amp; sources:</strong> all probabilities and expected values are computed live by an exact expected-value engine (infinite-deck model, a standard close approximation of a 6-deck shoe) under the rules shown on the front page: dealer stands on soft 17, double on any two cards including after splits, split aces receive one card, no resplits, late surrender available, blackjack pays 3:2, values conditioned on the dealer not holding a natural. Results agree with standard published expected-value references for these rules, such as the Wizard of Odds infinite-deck expected value tables and Griffin's <em>The Theory of Blackjack</em>. Because every page queries the same engine, the numbers always agree with each other.</p>
   <p style="margin-top:10px">For education and entertainment only - blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
   <p style="margin-top:10px">Last updated: July 24, 2026 · <a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of use</a></p>
 </footer>
-
 <!-- AD SLOT (mobile anchor): shown only ≤640px wide. Replace REPLACE_WITH_SLOT_ID with your AdSense unit ID. -->
 <div class="ad-anchor" id="ad-anchor">
   <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">×</button>
   <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot="REPLACE_WITH_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
 </div>
 <script>document.body.classList.add("has-anchor");</script>
-
 <script>
 document.querySelectorAll("ins.adsbygoogle:not([data-adsbygoogle-status])").forEach(ins => {
   if (ins.closest(".ad-anchor") && window.innerWidth > 640) return;

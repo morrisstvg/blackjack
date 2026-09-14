@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bestblackjackhands.com/sitemap.xml
+Sitemap: https://YOURDOMAIN.com/sitemap.xml
