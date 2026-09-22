@@ -8,20 +8,19 @@
 <link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <script async src="https://fundingchoicesmessages.google.com/i/pub-8707937416295070?ers=1"></script><script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
-<script async src="https://fundingchoicesmessages.google.com/i/pub-8707937416295070?ers=1"></script><script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8707937416295070"
      crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <nav class="nav" aria-label="Main">
   <div class="nav-inner">
-    <a class="wordmark" href="index.html"><span class="pip">♠</span>Best Blackjack Hands</a>
-    <button class="menu-toggle" aria-expanded="false" aria-controls="navlinks" aria-label="Open menu">☰ Menu</button>
+    <a class="wordmark" href="index.html">Best Blackjack Hands</a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="navlinks" aria-label="Open menu">Menu</button>
     <div class="navlinks" id="navlinks">
       <a class="navlink" href="index.html">Overview</a>
       <a class="navlink" href="rankings.html">Hand rankings</a>
@@ -45,8 +44,7 @@
 
 <!-- ============ ANALYZER ============ -->
 <main id="view-analyzer" class="view">
-  <div class="eyebrow">Hand analyzer</div>
-  <h1>What's the play?</h1>
+  <h1>Hand analyzer</h1>
   <p class="lede">Select your two dealt cards and the dealer's upcard, then deal. Jack, Queen and King all count as 10. The settings below override the site's default table rules on this page only.</p>
 
   <div class="controls">
@@ -57,7 +55,7 @@
       <div class="seg" id="set-h17" role="group" aria-label="Dealer rule on soft 17"><button type="button" data-val="s" aria-pressed="true">Stands</button><button type="button" data-val="h" aria-pressed="false">Hits</button></div>
     </div>
     <div class="control"><label>Shoe</label>
-      <button class="ghostbtn" id="shoe-toggle" aria-expanded="false" aria-controls="shoe-panel">Shoe composition ▾</button>
+      <button class="ghostbtn" id="shoe-toggle" aria-expanded="false" aria-controls="shoe-panel">Shoe composition</button>
     </div>
     <div class="control"><label>Hand</label>
       <button class="ghostbtn" id="reset-hand">Reset hand</button>
@@ -106,12 +104,12 @@
 <footer>
   <p><strong>Methodology &amp; sources:</strong> all probabilities and expected values are computed live by an exact expected-value engine (infinite-deck model, a standard close approximation of a 6-deck shoe) under the rules shown on the front page: dealer stands on soft 17, double on any two cards including after splits, split aces receive one card, no resplits, late surrender available, blackjack pays 3:2, values conditioned on the dealer not holding a natural. Results agree with standard published expected-value references for these rules, such as the Wizard of Odds infinite-deck expected value tables and Griffin's <em>The Theory of Blackjack</em>. Because every page queries the same engine, the numbers always agree with each other.</p>
   <p style="margin-top:10px">For education and entertainment only - blackjack favors the house even when played perfectly. 18+ where you are. Play responsibly.</p>
-  <p style="margin-top:10px">Last updated: July 24, 2026 · <a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of use</a></p>
+  <p style="margin-top:10px">Last updated: July 24, 2026 | <a href="privacy.html">Privacy policy</a> | <a href="terms.html">Terms of use</a></p>
 </footer>
 
-<!-- AD SLOT (mobile anchor): shown only ≤640px wide. Replace 7540887128 with your AdSense unit ID. -->
+<!-- AD SLOT (mobile anchor): shown only 640px wide and narrower. Replace 7540887128 with your AdSense unit ID. -->
 <div class="ad-anchor" id="ad-anchor">
-  <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">×</button>
+  <button class="ad-close" aria-label="Close ad" onclick="document.getElementById('ad-anchor').remove();document.body.classList.remove('has-anchor')">Close</button>
   <ins class="adsbygoogle" style="display:block;width:320px;height:50px" data-ad-client="ca-pub-8707937416295070" data-ad-slot="7540887128" data-ad-format="auto" data-full-width-responsive="true"></ins>
 </div>
 <script>document.body.classList.add("has-anchor");</script>
@@ -159,7 +157,7 @@ function syncPickers(){
   cardRow.querySelectorAll(".rankbtn").forEach(b => {
     const n = myCards.filter(x => x === b.dataset.rank).length;
     b.setAttribute("aria-pressed", n > 0 ? "true" : "false");
-    b.textContent = n === 2 ? b.dataset.rank + "\u00D72" : b.dataset.rank;
+    b.textContent = n === 2 ? b.dataset.rank + "x2" : b.dataset.rank;
   });
   upRow.querySelectorAll(".rankbtn").forEach(b =>
     b.setAttribute("aria-pressed", b.dataset.rank === upPick ? "true" : "false"));
@@ -193,7 +191,7 @@ shoeToggle.addEventListener("click", () => {
 });
 function shoeLabel(){
   const n = seenCount();
-  shoeToggle.textContent = "Shoe composition" + (n ? " (" + n + " seen)" : "") + (panel.hidden ? " \u25BE" : " \u25B4");
+  shoeToggle.textContent = "Shoe composition" + (n ? " (" + n + " seen)" : "");
 }
 const grid = document.getElementById("shoe-grid");
 RANKS.forEach(r => {
@@ -288,9 +286,9 @@ function explain(res, h, upV, eng){
     return h.pair === 11
       ? "Played as one hand this is a soft 12 - nearly worthless. But each ace is the best starting card in the game, so splitting turns one bad hand into two excellent ones."
       : h.pair === 8
-        ? "Sixteen is the worst total in blackjack. Two hands starting from an 8 each lose less than one hand stuck on 16 - splitting here is damage control, not greed."
+        ? "Sixteen is the worst total in blackjack. Two hands starting from an 8 each lose less than one hand stuck on 16 - splitting loses less than any way of playing the 16."
         : "Played together these cards make " + h.t + ", a mediocre total against a " + up + ". Each " + (h.pair === 10 ? "ten" : h.pair) + " is a stronger start on its own, so two hands earn back more than the extra bet risks.";
-  return "Every way of playing this hand loses more than half a bet on average - the best alternative is " + alt.name.toLowerCase() + " at " + fmtEV(alt.ev) + ". Paying half to walk away is simply the cheapest exit.";
+  return "Every way of playing this hand loses more than half a bet on average - the best alternative is " + alt.name.toLowerCase() + " at " + fmtEV(alt.ev) + ". Losing half the bet is the cheapest option.";
 }
 
 function ruleChips(){
@@ -339,7 +337,7 @@ function runAnalysis(){
       '<span class="vs">' + myCards.join(" + ") + " vs. dealer " + upPick + "</span>" +
       '<span class="bigwin">win chance with best play <b>' + fmtPct(bp.w) + "</b></span>" +
     "</div>" + ruleChips() +
-    '<div class="reco"><span class="medal">\u2605</span><div><b>' + res.best.name + "</b>" +
+    '<div class="reco"><div><b>' + res.best.name + "</b>" +
       "<span> - the recommended play under these settings (" + fmtEV(res.best.ev) + " expected value per unit bet)</span>" +
       '<p style="flex-basis:100%;margin-top:6px;font-size:.9rem;color:#D8DED6">' + explain(res, h, upV, eng) + "</p></div></div>" +
     '<div class="actions">' + rows + "</div>" +

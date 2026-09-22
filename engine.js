@@ -183,4 +183,4 @@ for (const h of HANDS){
   }
 }
 const fmtPct = x => (100*x).toFixed(1) + "%";
-const fmtEV  = x => (x >= 0 ? "+" : "\u2212") + Math.abs(x).toFixed(3);
+const fmtEV  = x => (x >= 0 ? "+" : "-") + Math.abs(x).toFixed(3);
